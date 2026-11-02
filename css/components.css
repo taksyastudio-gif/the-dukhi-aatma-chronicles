@@ -63,54 +63,62 @@
 }
 
 /* ==========================================================================
-   TESTING & PREVIEW DRAWER (For QA & Interactive Testing)
+   TESTING & PREVIEW DRAWER (Laptop & Desktop Only - Hidden on Mobile/Phone)
    ========================================================================== */
 
-.dev-test-trigger {
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-  z-index: 999;
-  background: rgba(15, 23, 42, 0.85);
-  border: 1px solid rgba(196, 181, 253, 0.35);
-  color: var(--text-muted);
-  font-size: 0.75rem;
-  font-family: var(--font-mono);
-  padding: 0.4rem 0.85rem;
-  border-radius: var(--radius-full);
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  backdrop-filter: blur(10px);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.dev-test-trigger:hover {
-  color: var(--text-pure);
-  border-color: var(--accent-lavender);
-  background: rgba(30, 41, 59, 0.95);
-}
-
+/* Hidden by default on phones, tablets, and touch-screen devices */
+.dev-test-trigger,
 .dev-test-panel {
-  position: fixed;
-  bottom: 3.5rem;
-  right: 1rem;
-  width: 320px;
-  max-width: calc(100vw - 2rem);
-  background: rgba(13, 19, 48, 0.96);
-  border: 1px solid var(--accent-lavender);
-  border-radius: var(--radius-lg);
-  padding: 1.25rem;
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.85);
-  z-index: 1000;
-  display: none;
-  backdrop-filter: blur(20px);
+  display: none !important;
 }
 
-.dev-test-panel.open {
-  display: block;
-  animation: fadeIn 0.2s ease;
+/* Strictly visible ONLY on desktop/laptop with a mouse pointer and wide screen */
+@media screen and (min-width: 901px) and (pointer: fine) and (hover: hover) {
+  .dev-test-trigger {
+    display: flex !important;
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 999;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(196, 181, 253, 0.35);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-full);
+    align-items: center;
+    gap: 0.4rem;
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .dev-test-trigger:hover {
+    color: var(--text-pure);
+    border-color: var(--accent-lavender);
+    background: rgba(30, 41, 59, 0.95);
+  }
+
+  .dev-test-panel {
+    position: fixed;
+    bottom: 3.5rem;
+    right: 1rem;
+    width: 320px;
+    max-width: calc(100vw - 2rem);
+    background: rgba(13, 19, 48, 0.96);
+    border: 1px solid var(--accent-lavender);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    backdrop-filter: blur(20px);
+  }
+
+  .dev-test-panel.open {
+    display: block !important;
+    animation: fadeIn 0.2s ease;
+  }
 }
 
 .panel-header {

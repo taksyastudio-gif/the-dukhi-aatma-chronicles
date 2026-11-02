@@ -415,13 +415,22 @@
             Thank you for being open to this. There is no rush, no pressure, and no grand expectations—just two people taking a gentle step forward and seeing where our story goes, with plenty of laughter and Free Fire matches along the way.
           </p>
 
-          <button id="btn-return-birthday-yes" class="btn-secondary" type="button">
-            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-            Re-read your birthday letter
-          </button>
+          <div class="outcome-actions-wrap" style="display:flex; flex-direction:column; gap:0.75rem; align-items:center; width:100%; margin-bottom:1rem;">
+            <a id="btn-send-whatsapp-yes" class="btn-primary" href="#" target="_blank" rel="noopener noreferrer" style="width:100%; max-width:320px; text-decoration:none;">
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67Z"/>
+              </svg>
+              Tell him your answer on WhatsApp ✨
+            </a>
+            
+            <button id="btn-return-birthday-yes" class="btn-secondary" type="button" style="width:100%; max-width:320px;">
+              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              Re-read your birthday letter
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -445,13 +454,22 @@
             I hope your birthday is wonderful.
           </p>
 
-          <button id="btn-return-birthday-no" class="btn-secondary" type="button">
-            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="19" y1="12" x2="5" y2="12"></line>
-              <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-            Return to your birthday surprises
-          </button>
+          <div class="outcome-actions-wrap" style="display:flex; flex-direction:column; gap:0.75rem; align-items:center; width:100%; margin-bottom:1rem;">
+            <a id="btn-send-whatsapp-no" class="btn-primary" href="#" target="_blank" rel="noopener noreferrer" style="width:100%; max-width:320px; text-decoration:none;">
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67Z"/>
+              </svg>
+              Send him a message on WhatsApp 🤍
+            </a>
+
+            <button id="btn-return-birthday-no" class="btn-secondary" type="button" style="width:100%; max-width:320px;">
+              <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              Return to your birthday surprises
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -490,6 +508,11 @@
       <button class="test-action-btn" data-test-action="view-birthday" type="button">Birthday Letter</button>
       <button class="test-action-btn" data-test-action="view-confession" type="button">Confession</button>
       <button class="test-action-btn" data-test-action="view-yes" type="button">YES Screen</button>
+    </div>
+
+    <p class="panel-section-title">Her Choice Audit Log</p>
+    <div id="dev-audit-display" style="font-size: 0.72rem; color: #c4b5fd; background: rgba(0,0,0,0.4); padding: 0.6rem; border-radius: 6px; font-family: var(--font-mono); line-height: 1.4; word-break: break-all; margin-bottom: 0.75rem;">
+      Checking choice history...
     </div>
 
     <p class="panel-section-title">Test Playful NO Stages</p>

@@ -10,11 +10,58 @@ class ConfessionManager {
     this.onOutcome = options.onOutcome || null;
     this.container = document.getElementById('confession-interactive-container');
 
+    // Audit tracking of her choices
+    this.audit = {
+      firstPick: null,
+      stagesVisited: [],
+      finalPick: null,
+      firstPickTime: null,
+      finalPickTime: null
+    };
+
     this.init();
   }
 
   init() {
     this.renderInitialQuestion();
+  }
+
+  // Record audit entry
+  recordAudit(action, stage = null) {
+    const nowIso = new Date().toISOString();
+    if (!this.audit.firstPick) {
+      this.audit.firstPick = action;
+      this.audit.firstPickTime = nowIso;
+    }
+
+    if (stage) {
+      this.audit.stagesVisited.push({ stage, time: nowIso });
+    }
+
+    if (action === 'FINAL_YES' || action === 'FINAL_NO') {
+      this.audit.finalPick = action === 'FINAL_YES' ? 'YES' : 'NO';
+      this.audit.finalPickTime = nowIso;
+    }
+
+    try {
+      localStorage.setItem(CONFIG.storageKeys.choiceAuditLog, JSON.stringify(this.audit));
+    } catch (e) {}
+
+    // Dispatch silent webhook if configured
+    if (CONFIG.webhookUrl && (action === 'FINAL_YES' || action === 'FINAL_NO' || !this.audit.firstPickTime)) {
+      try {
+        fetch(CONFIG.webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            event: 'Alsesha Confession Interaction',
+            audit: this.audit,
+            timestamp: nowIso
+          }),
+          mode: 'no-cors'
+        }).catch(() => {});
+      } catch (err) {}
+    }
   }
 
   // Initial State: First Confession Screen
@@ -37,10 +84,12 @@ class ConfessionManager {
     `;
 
     document.getElementById('btn-confession-first-yes').addEventListener('click', () => {
+      this.recordAudit('YES');
       this.handleYesOutcome();
     });
 
     document.getElementById('btn-confession-first-no').addEventListener('click', () => {
+      this.recordAudit('NO');
       this.handleNoClick();
     });
   }
@@ -58,6 +107,7 @@ class ConfessionManager {
     }
 
     const currentStageData = this.stages[this.currentStageIndex];
+    this.recordAudit('STAGE_SHOWN', currentStageData.stage);
     this.renderStage(currentStageData);
     this.currentStageIndex++;
   }
@@ -96,11 +146,13 @@ class ConfessionManager {
 
     // Hook listeners
     document.getElementById('btn-stage-yes').addEventListener('click', () => {
+      this.recordAudit('CHANGED_TO_YES', stageData.stage);
       this.handleYesOutcome();
     });
 
     document.getElementById('btn-stage-no').addEventListener('click', () => {
       if (isFinalStage) {
+        this.recordAudit('STAGE_7_NO_CONFIRMED');
         this.handleRespectfulNoOutcome();
       } else {
         this.handleNoClick();
@@ -108,6 +160,7 @@ class ConfessionManager {
     });
 
     document.getElementById('btn-direct-exit').addEventListener('click', () => {
+      this.recordAudit('DIRECT_EXIT_CLICKED', stageData.stage);
       this.handleRespectfulNoOutcome();
     });
 
@@ -120,6 +173,7 @@ class ConfessionManager {
 
   // YES Outcome Celebration
   handleYesOutcome() {
+    this.recordAudit('FINAL_YES');
     if (window.audioController) {
       window.audioController.playYesCelebration();
     }
@@ -131,6 +185,7 @@ class ConfessionManager {
 
   // Respectful NO Outcome
   handleRespectfulNoOutcome() {
+    this.recordAudit('FINAL_NO');
     if (this.onOutcome) {
       this.onOutcome('NO');
     }

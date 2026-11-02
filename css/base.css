@@ -18,10 +18,13 @@ html {
   font-family: var(--font-sans);
   line-height: 1.6;
   min-height: 100%;
+  min-height: 100dvh;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: hidden;
   background: radial-gradient(circle at 50% 15%, var(--bg-nebula-violet) 0%, var(--bg-midnight-navy) 40%, var(--bg-deep-space) 100%);
   background-attachment: fixed;
@@ -29,6 +32,7 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 /* Accessible Hidden Text for Screen Readers */
@@ -58,12 +62,14 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
   line-height: 1.25;
   letter-spacing: -0.015em;
+  overflow-wrap: break-word;
 }
 
 p {
   color: var(--text-secondary);
   font-size: 1.05rem;
   line-height: 1.7;
+  overflow-wrap: break-word;
 }
 
 strong {
@@ -75,13 +81,14 @@ a {
   color: var(--accent-lavender);
   text-decoration: none;
   transition: color var(--transition-fast);
+  touch-action: manipulation;
 }
 
 a:hover {
   color: var(--accent-soft-pink);
 }
 
-/* Standard Button Styles */
+/* Standard Button Styles - Optimized for Mobile Touch */
 button {
   font-family: var(--font-sans);
   font-size: 1rem;
@@ -94,8 +101,11 @@ button {
   justify-content: center;
   gap: var(--space-xs);
   transition: all var(--transition-normal);
-  padding: 0.75rem 1.5rem;
+  padding: 0.85rem 1.6rem;
   border-radius: var(--radius-full);
+  touch-action: manipulation;
+  min-height: 48px;
+  -webkit-tap-highlight-color: transparent;
 }
 
 button:disabled {

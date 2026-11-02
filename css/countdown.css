@@ -168,16 +168,44 @@
 
 /* Mobile Adjustments */
 @media (max-width: 600px) {
+  .countdown-view {
+    padding: 5.2rem var(--space-xs) 2.5rem;
+    justify-content: center;
+  }
+
   .countdown-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-sm);
+    gap: 0.65rem;
+    margin-bottom: var(--space-lg);
   }
 
   .countdown-card {
-    padding: var(--space-xl) var(--space-md);
+    padding: 1.5rem 1rem;
+    border-radius: var(--radius-lg);
+  }
+
+  .countdown-headline {
+    font-size: clamp(1.5rem, 6vw, 1.85rem);
+    line-height: 1.25;
+  }
+
+  .countdown-tagline {
+    font-size: 1.05rem;
+    margin-bottom: 1.5rem;
   }
 
   .digit-box {
-    padding: var(--space-md) var(--space-xs);
+    padding: 0.9rem 0.4rem;
+    border-radius: var(--radius-md);
+  }
+
+  .digit-value {
+    font-size: 2.2rem;
+  }
+
+  .npt-badge {
+    font-size: 0.72rem;
+    padding: 0.28rem 0.65rem;
+    margin-bottom: var(--space-md);
   }
 }

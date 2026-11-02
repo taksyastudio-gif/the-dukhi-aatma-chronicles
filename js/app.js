@@ -165,8 +165,47 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (outcome === 'NO') {
         switchView('outcomeNo');
       }
+      updateDevAuditDisplay();
     }
   });
+
+  // Setup WhatsApp Links
+  function setupWhatsAppLinks() {
+    const btnYes = document.getElementById('btn-send-whatsapp-yes');
+    const btnNo = document.getElementById('btn-send-whatsapp-no');
+
+    const yesText = encodeURIComponent("Hey! I just opened the Dukhi Aatma Chronicles midnight surprise... and it's a YES! ✨💫");
+    const noText = encodeURIComponent("Hey, thank you so much for the thoughtful midnight birthday letter and surprise. It means a lot to me 🤍");
+
+    const phone = CONFIG.userWhatsAppNumber ? CONFIG.userWhatsAppNumber.replace(/\D/g, '') : '';
+    const baseYesUrl = phone ? `https://wa.me/${phone}?text=${yesText}` : `https://api.whatsapp.com/send?text=${yesText}`;
+    const baseNoUrl = phone ? `https://wa.me/${phone}?text=${noText}` : `https://api.whatsapp.com/send?text=${noText}`;
+
+    if (btnYes) btnYes.href = baseYesUrl;
+    if (btnNo) btnNo.href = baseNoUrl;
+  }
+  setupWhatsAppLinks();
+
+  // Update Laptop Dev Audit Display
+  function updateDevAuditDisplay() {
+    const display = document.getElementById('dev-audit-display');
+    if (!display) return;
+    try {
+      const saved = localStorage.getItem(CONFIG.storageKeys.choiceAuditLog);
+      if (saved) {
+        const data = JSON.parse(saved);
+        display.innerHTML = `
+          <strong>First Pick:</strong> ${data.firstPick || 'None'}<br>
+          <strong>Final Decision:</strong> ${data.finalPick || 'Pending'}<br>
+          <strong>Stages Visited:</strong> ${data.stagesVisited ? data.stagesVisited.length : 0}
+        `;
+      } else {
+        display.textContent = 'No choices made yet.';
+      }
+    } catch (e) {
+      display.textContent = 'Unable to read audit.';
+    }
+  }
 
   // 8. Celebration Particle Launcher for YES screen
   function launchCelebrationParticles() {
@@ -222,10 +261,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 3800);
   }
 
-  // 10. QA & Interactive Dev Test Drawer
-  if (devTestTrigger && devTestPanel) {
+  // 10. QA & Interactive Dev Test Drawer (Laptop & Desktop Only)
+  const isMobileOrTouch = window.innerWidth <= 900 || ('ontouchstart' in window && !window.matchMedia('(hover: hover)').matches);
+  if (isMobileOrTouch) {
+    if (devTestTrigger) devTestTrigger.style.display = 'none';
+    if (devTestPanel) devTestPanel.style.display = 'none';
+  }
+
+  if (devTestTrigger && devTestPanel && !isMobileOrTouch) {
     devTestTrigger.addEventListener('click', () => {
       devTestPanel.classList.toggle('open');
+      updateDevAuditDisplay();
     });
 
     if (devCloseBtn) {

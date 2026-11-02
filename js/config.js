@@ -19,6 +19,12 @@ const CONFIG = {
   // which corresponds to 2026-11-02T18:15:00.000Z
   targetTimestampUTC: 1793643300000,
 
+  // Notification & Feedback Settings
+  // Optional: Set your WhatsApp phone number (with country code, e.g. "97798xxxxxxxx")
+  // or a Discord/Formspree Webhook URL to receive instant notification of her choice!
+  userWhatsAppNumber: "", // e.g. "9779800000000"
+  webhookUrl: "", // Optional webhook (Discord, Formspree, etc.)
+
   // Recipient Identity
   recipientName: "Alsesha Shakya",
   recipientNickname: "Dukhi Aatma",
@@ -27,7 +33,8 @@ const CONFIG = {
   storageKeys: {
     audioEnabled: "dukhi_aatma_audio_pref",
     viewState: "dukhi_aatma_view_state",
-    confessionOutcome: "dukhi_aatma_outcome"
+    confessionOutcome: "dukhi_aatma_outcome",
+    choiceAuditLog: "dukhi_aatma_choice_audit"
   },
 
   // Seven-Stage Playful NO Sequence
