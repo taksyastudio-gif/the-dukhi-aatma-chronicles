@@ -1,0 +1,206 @@
+/* ==========================================================================
+   THE DUKHI AATMA CHRONICLES - 3D ENVELOPE & OPENING EXPERIENCE
+   ========================================================================== */
+
+.opening-view {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 6rem var(--space-md) 4rem;
+  text-align: center;
+  position: relative;
+}
+
+.opening-wrapper {
+  max-width: 620px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Invitation Typography */
+.opening-invitation {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+  color: var(--text-pure);
+  margin-bottom: var(--space-xs);
+  font-weight: 600;
+  text-shadow: 0 0 25px rgba(196, 181, 253, 0.4);
+  animation: gentle-float 4s ease-in-out infinite;
+}
+
+.opening-subtitle {
+  font-size: 1.05rem;
+  color: var(--accent-lavender);
+  margin-bottom: var(--space-2xl);
+  letter-spacing: 0.05em;
+}
+
+@keyframes gentle-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* 3D Envelope Container */
+.envelope-stage {
+  perspective: 1200px;
+  width: 320px;
+  height: 220px;
+  margin: 0 auto var(--space-2xl);
+  position: relative;
+  cursor: pointer;
+}
+
+.envelope-body {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: linear-gradient(145deg, #181d45 0%, #0d1230 100%);
+  border-radius: var(--radius-md);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7), 0 0 30px rgba(139, 92, 246, 0.25);
+  border: 1px solid rgba(196, 181, 253, 0.25);
+  transform-style: preserve-3d;
+  transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+.envelope-stage:hover .envelope-body {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.8), 0 0 45px rgba(244, 114, 182, 0.35);
+}
+
+/* Triangular Envelope Pocket & Flap */
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 160px solid transparent;
+  border-right: 160px solid transparent;
+  border-top: 120px solid #232b63;
+  transform-origin: top;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 5;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.4));
+}
+
+.envelope-pocket {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 160px solid #141a3d;
+  border-right: 160px solid #141a3d;
+  border-bottom: 120px solid #1e2658;
+  border-top: 100px solid transparent;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  z-index: 4;
+}
+
+/* Golden Wax Seal */
+.wax-seal {
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 58px;
+  height: 58px;
+  background: radial-gradient(circle, #fde047 0%, #ca8a04 70%, #854d0e 100%);
+  border-radius: 50%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 20px rgba(251, 191, 36, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.6);
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #eab308;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.wax-seal svg {
+  width: 26px;
+  height: 26px;
+  color: #713f12;
+  filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.4));
+}
+
+/* Hidden Letter Inside Envelope */
+.envelope-letter {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  right: 20px;
+  bottom: 15px;
+  background: #fdfbf7;
+  border-radius: 8px;
+  z-index: 2;
+  padding: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.letter-preview-line {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 3px;
+  margin-bottom: 8px;
+  width: 80%;
+}
+
+.letter-preview-line:last-child {
+  width: 50%;
+}
+
+/* Open Animation Classes */
+.envelope-stage.opened .envelope-flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+.envelope-stage.opened .wax-seal {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.6);
+}
+
+.envelope-stage.opened .envelope-letter {
+  transform: translateY(-100px) scale(1.05);
+  z-index: 7;
+}
+
+/* Trigger Button */
+.open-surprise-btn {
+  font-size: 1.15rem;
+  padding: 0.95rem 2.5rem;
+  gap: var(--space-sm);
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 480px) {
+  .envelope-stage {
+    width: 280px;
+    height: 195px;
+  }
+  .envelope-flap {
+    border-left-width: 140px;
+    border-right-width: 140px;
+    border-top-width: 105px;
+  }
+  .envelope-pocket {
+    border-left-width: 140px;
+    border-right-width: 140px;
+    border-bottom-width: 105px;
+    border-top-width: 90px;
+  }
+  .wax-seal {
+    top: 90px;
+    width: 50px;
+    height: 50px;
+  }
+}

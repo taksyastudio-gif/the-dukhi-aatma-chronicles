@@ -1,0 +1,175 @@
+/* ==========================================================================
+   THE DUKHI AATMA CHRONICLES - COMPONENT STYLES & DEV TEST DRAWER
+   ========================================================================== */
+
+/* Toast notification */
+.toast-msg {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid var(--accent-lavender);
+  color: var(--text-pure);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-full);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  opacity: 0;
+  transition: all var(--transition-normal);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  pointer-events: none;
+}
+
+.toast-msg.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Sound Wave Animation on Audio Button */
+.sound-bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+}
+
+.sound-bar {
+  width: 2px;
+  background-color: currentColor;
+  border-radius: 1px;
+}
+
+.sound-bar:nth-child(1) { height: 4px; }
+.sound-bar:nth-child(2) { height: 10px; }
+.sound-bar:nth-child(3) { height: 6px; }
+
+.header-btn.playing .sound-bar:nth-child(1) {
+  animation: sound-bounce 0.8s ease-in-out infinite alternate;
+}
+.header-btn.playing .sound-bar:nth-child(2) {
+  animation: sound-bounce 0.6s ease-in-out 0.2s infinite alternate;
+}
+.header-btn.playing .sound-bar:nth-child(3) {
+  animation: sound-bounce 0.9s ease-in-out 0.4s infinite alternate;
+}
+
+@keyframes sound-bounce {
+  0% { height: 3px; }
+  100% { height: 12px; }
+}
+
+/* ==========================================================================
+   TESTING & PREVIEW DRAWER (For QA & Interactive Testing)
+   ========================================================================== */
+
+.dev-test-trigger {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 999;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(196, 181, 253, 0.35);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.dev-test-trigger:hover {
+  color: var(--text-pure);
+  border-color: var(--accent-lavender);
+  background: rgba(30, 41, 59, 0.95);
+}
+
+.dev-test-panel {
+  position: fixed;
+  bottom: 3.5rem;
+  right: 1rem;
+  width: 320px;
+  max-width: calc(100vw - 2rem);
+  background: rgba(13, 19, 48, 0.96);
+  border: 1px solid var(--accent-lavender);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.85);
+  z-index: 1000;
+  display: none;
+  backdrop-filter: blur(20px);
+}
+
+.dev-test-panel.open {
+  display: block;
+  animation: fadeIn 0.2s ease;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(196, 181, 253, 0.2);
+  padding-bottom: 0.5rem;
+}
+
+.panel-title {
+  font-size: 0.85rem;
+  font-family: var(--font-mono);
+  color: var(--accent-lavender);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.panel-close-btn {
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+}
+
+.panel-close-btn:hover {
+  color: var(--text-pure);
+}
+
+.panel-section-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--accent-soft-pink);
+  margin: 0.75rem 0 0.4rem;
+  font-family: var(--font-mono);
+}
+
+.test-btn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+
+.test-action-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(196, 181, 253, 0.2);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: var(--radius-sm);
+  text-align: center;
+  width: 100%;
+}
+
+.test-action-btn:hover {
+  background: rgba(139, 92, 246, 0.25);
+  color: var(--text-pure);
+  border-color: var(--accent-lavender);
+}

@@ -1,0 +1,330 @@
+/* ==========================================================================
+   THE DUKHI AATMA CHRONICLES - BIRTHDAY EXPERIENCE & TIMELINE
+   ========================================================================== */
+
+.birthday-view {
+  min-height: 100vh;
+  padding: 6.5rem var(--space-md) 6rem;
+  position: relative;
+}
+
+.birthday-hero {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto var(--space-3xl);
+}
+
+.hero-subtitle-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 0.4rem 1.2rem;
+  border-radius: var(--radius-full);
+  background: rgba(244, 114, 182, 0.15);
+  border: 1px solid rgba(244, 114, 182, 0.35);
+  font-size: 0.9rem;
+  color: var(--accent-soft-pink);
+  margin-bottom: var(--space-md);
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+.birthday-title {
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 700;
+  color: var(--text-pure);
+  margin-bottom: var(--space-xs);
+  line-height: 1.15;
+  background: linear-gradient(135deg, #ffffff 30%, var(--accent-lavender) 70%, var(--accent-soft-pink) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.birthday-subhead {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  color: var(--accent-lavender);
+  margin-bottom: var(--space-xl);
+}
+
+/* Heartfelt Letter Container */
+.birthday-letter-card {
+  max-width: 780px;
+  margin: 0 auto var(--space-3xl);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl) var(--space-xl);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-card);
+  position: relative;
+  overflow: hidden;
+}
+
+.birthday-letter-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--accent-lavender), var(--accent-rose), var(--accent-violet));
+}
+
+.letter-salutation {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  color: var(--text-pure);
+  margin-bottom: var(--space-md);
+}
+
+.letter-paragraph {
+  font-size: 1.12rem;
+  line-height: 1.85;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg);
+}
+
+.letter-paragraph strong {
+  color: var(--accent-lavender);
+}
+
+.letter-signoff {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--accent-soft-pink);
+  margin-top: var(--space-xl);
+  text-align: right;
+}
+
+/* ==========================================================================
+   ONE-YEAR FRIENDSHIP TIMELINE (CONSTELLATION PATH)
+   ========================================================================== */
+
+.timeline-section {
+  max-width: 820px;
+  margin: 0 auto var(--space-3xl);
+}
+
+.section-header-wrap {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent-violet);
+  margin-bottom: var(--space-2xs);
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  color: var(--text-pure);
+  margin-bottom: var(--space-xs);
+}
+
+.section-desc {
+  color: var(--text-muted);
+  font-size: 1rem;
+}
+
+.timeline-track {
+  position: relative;
+  padding: var(--space-lg) 0;
+}
+
+.timeline-track::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 30px;
+  width: 2px;
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.2), var(--accent-lavender), var(--accent-rose), rgba(139, 92, 246, 0.2));
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: var(--space-2xl);
+  padding-left: 80px;
+}
+
+.timeline-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-node {
+  position: absolute;
+  left: 17px;
+  top: 6px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bg-card-solid);
+  border: 2px solid var(--accent-lavender);
+  box-shadow: 0 0 15px rgba(196, 181, 253, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  transition: all var(--transition-normal);
+}
+
+.timeline-node svg {
+  width: 14px;
+  height: 14px;
+  color: var(--accent-gold-warm);
+}
+
+.timeline-item:hover .timeline-node {
+  transform: scale(1.2);
+  border-color: var(--accent-soft-pink);
+  box-shadow: 0 0 25px rgba(244, 114, 182, 0.6);
+}
+
+.timeline-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  backdrop-filter: blur(12px);
+  transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.timeline-card:hover {
+  transform: translateX(6px);
+  border-color: var(--accent-lavender);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.timeline-date-tag {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent-soft-pink);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-2xs);
+  display: block;
+}
+
+.timeline-card-title {
+  font-size: 1.3rem;
+  color: var(--text-pure);
+  margin-bottom: var(--space-xs);
+}
+
+.timeline-card-desc {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   DUKHI AATMA OBSERVATIONS SECTION
+   ========================================================================== */
+
+.observations-section {
+  max-width: 860px;
+  margin: 0 auto var(--space-3xl);
+}
+
+.observations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-lg);
+}
+
+.obs-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  backdrop-filter: blur(12px);
+  transition: all var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+}
+
+.obs-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-lavender);
+  box-shadow: 0 12px 35px rgba(109, 40, 217, 0.25);
+}
+
+.obs-icon-bubble {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(139, 92, 246, 0.2);
+  border: 1px solid rgba(196, 181, 253, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-md);
+  color: var(--accent-lavender);
+}
+
+.obs-icon-bubble svg {
+  width: 22px;
+  height: 22px;
+}
+
+.obs-title {
+  font-size: 1.15rem;
+  color: var(--text-pure);
+  margin-bottom: var(--space-xs);
+}
+
+.obs-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* Chapter Transition Callout */
+.chapter-transition-wrap {
+  text-align: center;
+  max-width: 680px;
+  margin: var(--space-3xl) auto var(--space-xl);
+  padding: var(--space-2xl) var(--space-lg);
+  background: linear-gradient(180deg, rgba(16, 22, 58, 0.5) 0%, rgba(29, 23, 66, 0.8) 100%);
+  border: 1px solid rgba(196, 181, 253, 0.25);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+}
+
+.transition-lead {
+  font-family: var(--font-serif);
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+  color: var(--text-pure);
+  margin-bottom: var(--space-md);
+  line-height: 1.5;
+}
+
+.proceed-confession-btn {
+  font-size: 1.05rem;
+  padding: 0.85rem 2.2rem;
+}
+
+@media (max-width: 600px) {
+  .timeline-track::before {
+    left: 20px;
+  }
+  .timeline-item {
+    padding-left: 55px;
+  }
+  .timeline-node {
+    left: 8px;
+    width: 24px;
+    height: 24px;
+  }
+  .birthday-letter-card {
+    padding: var(--space-xl) var(--space-md);
+  }
+}

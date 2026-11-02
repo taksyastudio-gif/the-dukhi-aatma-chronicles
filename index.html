@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Dukhi Aatma Chronicles | A Midnight Birthday Surprise</title>
+  
+  <meta name="description" content="A handcrafted midnight birthday surprise and confession experience for Alsesha Shakya (Dukhi Aatma).">
+  <meta name="theme-color" content="#090e24">
+
+  <!-- Google Fonts Preconnect & Imports -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/stars.css">
+  <link rel="stylesheet" href="css/countdown.css">
+  <link rel="stylesheet" href="css/envelope.css">
+  <link rel="stylesheet" href="css/birthday.css">
+  <link rel="stylesheet" href="css/confession.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+  <!-- Background Celestial Canvas & Nebulae -->
+  <canvas id="celestial-canvas" aria-hidden="true"></canvas>
+  <div class="nebula-glow nebula-top" aria-hidden="true"></div>
+  <div class="nebula-glow nebula-bottom" aria-hidden="true"></div>
+
+  <!-- Persistent Header with Sound Control & Brand Pill -->
+  <header class="experience-header">
+    <div class="brand-badge">
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+      </svg>
+      <span>The Dukhi Aatma Chronicles</span>
+    </div>
+
+    <div class="header-controls">
+      <button id="btn-audio-toggle" class="header-btn" type="button" aria-label="Toggle ambient sound">
+        <div class="sound-bars" aria-hidden="true">
+          <span class="sound-bar"></span>
+          <span class="sound-bar"></span>
+          <span class="sound-bar"></span>
+        </div>
+        <span id="audio-status-text">Sound</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main View Container -->
+  <main id="app-root">
+
+    <!-- ===================================================================
+         VIEW 1: THE MIDNIGHT COUNTDOWN
+         Target: 3 November 2026, 00:00:00 Asia/Kathmandu (UTC+05:45)
+         =================================================================== -->
+    <section id="view-countdown" class="view-section countdown-view active" aria-label="Midnight Countdown">
+      <div class="celestial-moon-wrap" aria-hidden="true">
+        <div class="celestial-moon"></div>
+      </div>
+
+      <div class="countdown-card">
+        <div class="npt-badge">
+          <span class="npt-pulse-dot" aria-hidden="true"></span>
+          <span>Asia/Kathmandu • Nepal Standard Time (UTC+05:45)</span>
+        </div>
+
+        <p class="countdown-pretitle">November 3 • The Midnight Arrival</p>
+        <h1 class="countdown-headline">Someone has been waiting for this midnight...</h1>
+        <p class="countdown-tagline">...and it's not just because it's your birthday.</p>
+
+        <div class="countdown-grid" role="timer" aria-live="off">
+          <div class="digit-box">
+            <span id="val-days" class="digit-value">00</span>
+            <span class="digit-label">Days</span>
+          </div>
+          <div class="digit-box">
+            <span id="val-hours" class="digit-value">00</span>
+            <span class="digit-label">Hours</span>
+          </div>
+          <div class="digit-box">
+            <span id="val-minutes" class="digit-value">00</span>
+            <span class="digit-label">Minutes</span>
+          </div>
+          <div class="digit-box">
+            <span id="val-seconds" class="digit-value">00</span>
+            <span class="digit-label">Seconds</span>
+          </div>
+        </div>
+
+        <div class="clock-status-bar">
+          <span class="status-badge">
+            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span id="clock-status-label">Synchronizing with Nepal Standard Time...</span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         VIEW 2: THE OPENING EXPERIENCE (3D WAX-SEALED ENVELOPE)
+         =================================================================== -->
+    <section id="view-opening" class="view-section opening-view" aria-label="The Midnight Invitation">
+      <div class="opening-wrapper">
+        <h2 class="opening-invitation">A little something for you, Alsesha.</h2>
+        <p class="opening-subtitle">The clock struck midnight in Nepal. Your surprise has arrived.</p>
+
+        <!-- 3D Interactive Envelope -->
+        <div id="envelope-stage" class="envelope-stage" role="button" tabindex="0" aria-label="Wax-sealed letter for Alsesha. Click to open.">
+          <div class="envelope-body">
+            <div class="envelope-flap"></div>
+            
+            <div class="wax-seal" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L14.4 7.2L20 8L16 12L17 17.6L12 15L7 17.6L8 12L4 8L9.6 7.2L12 2Z"/>
+              </svg>
+            </div>
+
+            <div class="envelope-letter" aria-hidden="true">
+              <div class="letter-preview-line"></div>
+              <div class="letter-preview-line"></div>
+              <div class="letter-preview-line"></div>
+            </div>
+
+            <div class="envelope-pocket"></div>
+          </div>
+        </div>
+
+        <button id="btn-open-surprise" class="btn-primary open-surprise-btn" type="button">
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+          </svg>
+          Open your birthday surprise
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         VIEW 3: THE BIRTHDAY EXPERIENCE
+         =================================================================== -->
+    <section id="view-birthday" class="view-section birthday-view" aria-label="Birthday Wishes & Friendship Chronicles">
+      <div class="container">
+        
+        <!-- Hero Header -->
+        <div class="birthday-hero">
+          <div class="hero-subtitle-pill">
+            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            <span>November 3 • A Special Midnight</span>
+          </div>
+          <h1 class="birthday-title">Happy Birthday, Alsesha.</h1>
+          <p class="birthday-subhead">To my favourite Dukhi Aatma.</p>
+        </div>
+
+        <!-- Heartfelt Birthday Letter -->
+        <article class="birthday-letter-card">
+          <h2 class="letter-salutation">Dear Alsesha,</h2>
+          
+          <p class="letter-paragraph">
+            Another year has turned, and midnight is officially yours. I wanted to take a quiet moment before the noise of everyone else’s birthday messages to write you something honest and genuine.
+          </p>
+
+          <p class="letter-paragraph">
+            It is hard to believe that <strong>approximately one year</strong> has already slipped by since the day we met. Life has a funny way of making the most unexpected moments count the most—meeting randomly in the middle of a Free Fire match on Girlfriend Day back in August wasn’t on my itinerary for that month, but it ended up being one of the best things that could have happened.
+          </p>
+
+          <p class="letter-paragraph">
+            Throughout this past year, you have been someone I truly appreciate having in my life. Despite the nickname—and no matter how much you play the part of a dramatic <em>Dukhi Aatma</em>—your presence has brought a genuine warmth and laughter into my days. You have this quiet way of making random conversations feel comfortable and memorable.
+          </p>
+
+          <p class="letter-paragraph">
+            I hope this new year of your life brings you everything you hope for: peaceful moments, reasons to smile without second-guessing them, and people who recognize how precious you are. You deserve a year that treats your heart with care.
+          </p>
+
+          <p class="letter-signoff">
+            Happy Birthday, Dukhi Aatma. Always cheering for you.
+          </p>
+        </article>
+
+        <!-- One-Year Friendship Timeline -->
+        <section class="timeline-section" aria-label="One-Year Friendship Timeline">
+          <div class="section-header-wrap">
+            <span class="section-label">Memory Constellation</span>
+            <h2 class="section-title">One Year in Orbit</h2>
+            <p class="section-desc">The unexpected path from a random game match to this midnight.</p>
+          </div>
+
+          <div class="timeline-track">
+            
+            <!-- Milestone 1 -->
+            <div class="timeline-item">
+              <div class="timeline-node" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                </svg>
+              </div>
+              <div class="timeline-card">
+                <span class="timeline-date-tag">August • Girlfriend Day</span>
+                <h3 class="timeline-card-title">The Random Free Fire Match</h3>
+                <p class="timeline-card-desc">
+                  Out of all the millions of players across servers, our paths crossed in a random Free Fire match. Two strangers surviving zones, not knowing that a gaming session would outlast every virtual match we'd ever play.
+                </p>
+              </div>
+            </div>
+
+            <!-- Milestone 2 -->
+            <div class="timeline-item">
+              <div class="timeline-node" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                </svg>
+              </div>
+              <div class="timeline-card">
+                <span class="timeline-date-tag">The Beginning of a Moniker</span>
+                <h3 class="timeline-card-title">The Birth of "Dukhi Aatma"</h3>
+                <p class="timeline-card-desc">
+                  What started as a playful reaction to your classic dramatic sighs quickly became the sweetest, most affectionate nickname. A reminder that even in your most sorrowful moods, you manage to make people smile.
+                </p>
+              </div>
+            </div>
+
+            <!-- Milestone 3 -->
+            <div class="timeline-item">
+              <div class="timeline-node" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
+                </svg>
+              </div>
+              <div class="timeline-card">
+                <span class="timeline-date-tag">Over the Seasons</span>
+                <h3 class="timeline-card-title">The Comfort Zone</h3>
+                <p class="timeline-card-desc">
+                  As the weeks turned into months, casual gaming banter turned into everyday comfort. Finding someone you genuinely look forward to hearing from is rare, but here we were, making ordinary days feel a little brighter.
+                </p>
+              </div>
+            </div>
+
+            <!-- Milestone 4 -->
+            <div class="timeline-item">
+              <div class="timeline-node" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+              </div>
+              <div class="timeline-card">
+                <span class="timeline-date-tag">November 3 • One Year Later</span>
+                <h3 class="timeline-card-title">This Very Midnight</h3>
+                <p class="timeline-card-desc">
+                  Approximately one year since we first met, standing at midnight on your birthday. Celebrating you, the memories we’ve built, and how thankful I am that we crossed paths.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- "Things I have learned about having a Dukhi Aatma in my life" -->
+        <section class="observations-section" aria-label="Field Notes on a Dukhi Aatma">
+          <div class="section-header-wrap">
+            <span class="section-label">Field Notes</span>
+            <h2 class="section-title">Things I have learned about having a Dukhi Aatma in my life</h2>
+            <p class="section-desc">A few affectionate observations from the past year.</p>
+          </div>
+
+          <div class="observations-grid">
+            
+            <div class="obs-card">
+              <div class="obs-icon-bubble" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/>
+                </svg>
+              </div>
+              <h3 class="obs-title">The Atmospheric Sigh</h3>
+              <p class="obs-text">
+                A Dukhi Aatma doesn't just exhale; she produces a gentle sigh of such profound melancholy that nearby meteorologists report unexpected drops in barometric pressure.
+              </p>
+            </div>
+
+            <div class="obs-card">
+              <div class="obs-icon-bubble" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+              </div>
+              <h3 class="obs-title">The Free Fire Paradox</h3>
+              <p class="obs-text">
+                Somehow, someone who can survive high-stakes battle royale encounters can simultaneously feel completely overwhelmed by simple daily dilemmas. It's an endearing mystery.
+              </p>
+            </div>
+
+            <div class="obs-card">
+              <div class="obs-icon-bubble" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                  <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                  <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                </svg>
+              </div>
+              <h3 class="obs-title">The Rare Smile Achievement</h3>
+              <p class="obs-text">
+                Making a Dukhi Aatma genuinely laugh or smile feels like unlocking a secret, mythical achievement in a game. It instantly makes any ordinary day feel ten times better.
+              </p>
+            </div>
+
+            <div class="obs-card">
+              <div class="obs-icon-bubble" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="4"></circle>
+                  <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+                </svg>
+              </div>
+              <h3 class="obs-title">The Midnight Energy Peak</h3>
+              <p class="obs-text">
+                Capable of feeling completely exhausted for 16 consecutive hours, yet mysteriously uncovering a reserve of philosophical late-night energy right when the rest of the world is asleep.
+              </p>
+            </div>
+
+            <div class="obs-card">
+              <div class="obs-icon-bubble" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+              </div>
+              <h3 class="obs-title">The Warmest Heart</h3>
+              <p class="obs-text">
+                Behind the comedic title of "Dukhi Aatma" lives someone incredibly thoughtful, resilient, and caring. Having you in my world is something I will always be grateful for.
+              </p>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Chapter Transition Callout -->
+        <div class="chapter-transition-wrap">
+          <p class="transition-lead">
+            Okay... birthday surprise delivered.<br>
+            But there's one more thing I've been wanting to ask you.
+          </p>
+          <button id="btn-proceed-confession" class="btn-primary proceed-confession-btn" type="button">
+            Read what's on my mind
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         VIEW 4: THE FINAL CONFESSION & 7-STAGE PLAYFUL NO
+         =================================================================== -->
+    <section id="view-confession" class="view-section confession-view" aria-label="The Final Confession">
+      <div class="container-narrow">
+        <div class="confession-card">
+          <div class="confession-badge">
+            <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            <span>One Honest Question</span>
+          </div>
+
+          <h2 class="confession-headline">Alsesha,</h2>
+
+          <div class="confession-body">
+            <p>
+              Somewhere along this unexpected friendship, you became someone I genuinely look forward to talking to.
+            </p>
+            <p>
+              I don't know exactly when that happened, but I realised that my feelings might be a little more than friendship.
+            </p>
+            <p>
+              So, I wanted to ask you something.
+            </p>
+            <p>
+              <strong>Would you be open to giving us a chance to explore something more than friendship?</strong>
+            </p>
+            <p>
+              Whatever your answer is, I respect it. I value you, and I don't want you to feel pressured.
+            </p>
+          </div>
+
+          <!-- Interactive YES / NO & 7-Stage Container -->
+          <div id="confession-interactive-container"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         VIEW 5: YES CELEBRATION
+         =================================================================== -->
+    <section id="view-outcome-yes" class="view-section outcome-view" aria-label="Celebration Screen">
+      <div class="container-narrow">
+        <div class="celebration-card">
+          <div class="celebration-icon-wrap" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+          </div>
+
+          <h1 class="celebration-title">Wait... is this actually a YES?</h1>
+          <p class="celebration-subtitle">You just made this midnight a little more special.</p>
+
+          <p class="celebration-message">
+            Thank you for being open to this. There is no rush, no pressure, and no grand expectations—just two people taking a gentle step forward and seeing where our story goes, with plenty of laughter and Free Fire matches along the way.
+          </p>
+
+          <button id="btn-return-birthday-yes" class="btn-secondary" type="button">
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Re-read your birthday letter
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         VIEW 6: RESPECTFUL NO ENDING
+         =================================================================== -->
+    <section id="view-outcome-no" class="view-section outcome-view" aria-label="Respectful Ending Screen">
+      <div class="container-narrow">
+        <div class="respectful-no-card">
+          <div class="respectful-icon-wrap" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+            </svg>
+          </div>
+
+          <h1 class="respectful-title">Thank you for being honest with me, Alsesha.</h1>
+
+          <p class="respectful-text">
+            I genuinely appreciate you and the friendship we've shared. No pressure, no awkward expectations, and no hard feelings.<br><br>
+            I hope your birthday is wonderful.
+          </p>
+
+          <button id="btn-return-birthday-no" class="btn-secondary" type="button">
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Return to your birthday surprises
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================================================================
+       QA & DEV TESTING DRAWER (Preview all states without altering real date)
+       Toggle via button or Alt+T / Ctrl+Shift+T
+       =================================================================== -->
+  <button id="dev-test-trigger" class="dev-test-trigger" type="button" aria-label="Open QA & Preview Modes">
+    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"></circle>
+      <polyline points="12 6 12 12 16 14"></polyline>
+    </svg>
+    <span>QA / Preview Modes</span>
+  </button>
+
+  <div id="dev-test-panel" class="dev-test-panel" role="dialog" aria-modal="true" aria-label="QA Test Suite">
+    <div class="panel-header">
+      <span class="panel-title">⏱️ Test Control Suite</span>
+      <button id="dev-panel-close" class="panel-close-btn" type="button" aria-label="Close test panel">&times;</button>
+    </div>
+
+    <p class="panel-section-title">Clock & Midnight Triggers</p>
+    <div class="test-btn-grid">
+      <button class="test-action-btn" data-test-action="countdown-5s" type="button">5s to Midnight</button>
+      <button class="test-action-btn" data-test-action="countdown-10s" type="button">10s to Midnight</button>
+      <button class="test-action-btn" data-test-action="trigger-midnight" type="button">At Midnight</button>
+      <button class="test-action-btn" data-test-action="reset-live" type="button">Reset Live NPT</button>
+    </div>
+
+    <p class="panel-section-title">Jump to Views</p>
+    <div class="test-btn-grid">
+      <button class="test-action-btn" data-test-action="view-envelope" type="button">Envelope</button>
+      <button class="test-action-btn" data-test-action="view-birthday" type="button">Birthday Letter</button>
+      <button class="test-action-btn" data-test-action="view-confession" type="button">Confession</button>
+      <button class="test-action-btn" data-test-action="view-yes" type="button">YES Screen</button>
+    </div>
+
+    <p class="panel-section-title">Test Playful NO Stages</p>
+    <div class="test-btn-grid">
+      <button class="test-action-btn" data-test-action="view-stage-1" type="button">Stage 1</button>
+      <button class="test-action-btn" data-test-action="view-stage-4" type="button">Stage 4</button>
+      <button class="test-action-btn" data-test-action="view-stage-7" type="button">Stage 7</button>
+      <button class="test-action-btn" data-test-action="view-no" type="button">Final NO</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/stars.js"></script>
+  <script src="js/clock.js"></script>
+  <script src="js/confession.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
