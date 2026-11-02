@@ -57,68 +57,62 @@
   animation: sound-bounce 0.9s ease-in-out 0.4s infinite alternate;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @keyframes sound-bounce {
   0% { height: 3px; }
   100% { height: 12px; }
 }
 
 /* ==========================================================================
-   TESTING & PREVIEW DRAWER (Laptop & Desktop Only - Hidden on Mobile/Phone)
+   TESTING & PREVIEW DRAWER (Completely Hidden by Default)
+   Only visible when explicitly enabled via ?dev=true or ?qa=1 in URL
    ========================================================================== */
 
-/* Hidden by default on phones, tablets, and touch-screen devices */
 .dev-test-trigger,
 .dev-test-panel {
   display: none !important;
 }
 
-/* Strictly visible ONLY on desktop/laptop with a mouse pointer and wide screen */
-@media screen and (min-width: 901px) and (pointer: fine) and (hover: hover) {
-  .dev-test-trigger {
-    display: flex !important;
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-    z-index: 999;
-    background: rgba(15, 23, 42, 0.85);
-    border: 1px solid rgba(196, 181, 253, 0.35);
-    color: var(--text-muted);
-    font-size: 0.75rem;
-    font-family: var(--font-mono);
-    padding: 0.4rem 0.85rem;
-    border-radius: var(--radius-full);
-    align-items: center;
-    gap: 0.4rem;
-    backdrop-filter: blur(10px);
-    cursor: pointer;
-    transition: all var(--transition-fast);
-  }
+/* Only display if body has dev-mode-active class (via ?dev=true or secret shortcut) */
+body.dev-mode-active .dev-test-trigger {
+  display: flex !important;
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 999;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(196, 181, 253, 0.4);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+  align-items: center;
+  gap: 0.4rem;
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
 
-  .dev-test-trigger:hover {
-    color: var(--text-pure);
-    border-color: var(--accent-lavender);
-    background: rgba(30, 41, 59, 0.95);
-  }
-
-  .dev-test-panel {
-    position: fixed;
-    bottom: 3.5rem;
-    right: 1rem;
-    width: 320px;
-    max-width: calc(100vw - 2rem);
-    background: rgba(13, 19, 48, 0.96);
-    border: 1px solid var(--accent-lavender);
-    border-radius: var(--radius-lg);
-    padding: 1.25rem;
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.85);
-    z-index: 1000;
-    backdrop-filter: blur(20px);
-  }
-
-  .dev-test-panel.open {
-    display: block !important;
-    animation: fadeIn 0.2s ease;
-  }
+body.dev-mode-active .dev-test-panel.open {
+  display: block !important;
+  position: fixed;
+  bottom: 3.5rem;
+  right: 1rem;
+  width: 320px;
+  max-width: calc(100vw - 2rem);
+  background: rgba(13, 19, 48, 0.98);
+  border: 1px solid var(--accent-lavender);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  backdrop-filter: blur(20px);
+  animation: fadeIn 0.2s ease;
 }
 
 .panel-header {

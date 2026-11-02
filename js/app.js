@@ -261,14 +261,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 3800);
   }
 
-  // 10. QA & Interactive Dev Test Drawer (Laptop & Desktop Only)
-  const isMobileOrTouch = window.innerWidth <= 900 || ('ontouchstart' in window && !window.matchMedia('(hover: hover)').matches);
-  if (isMobileOrTouch) {
-    if (devTestTrigger) devTestTrigger.style.display = 'none';
-    if (devTestPanel) devTestPanel.style.display = 'none';
+  // 10. QA & Interactive Dev Test Drawer
+  // Completely hidden unless explicitly requested with ?dev=true or ?qa=1 or secret shortcut Alt+T
+  const urlParams = new URLSearchParams(window.location.search);
+  const isDevExplicit = urlParams.has('dev') || urlParams.has('qa') || urlParams.has('test');
+
+  if (isDevExplicit) {
+    document.body.classList.add('dev-mode-active');
   }
 
-  if (devTestTrigger && devTestPanel && !isMobileOrTouch) {
+  // Keyboard shortcut toggle on desktop: Alt + T or Ctrl + Shift + T
+  window.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 't') || (e.altKey && e.key.toLowerCase() === 't')) {
+      e.preventDefault();
+      document.body.classList.toggle('dev-mode-active');
+      if (devTestPanel) {
+        devTestPanel.classList.toggle('open');
+        updateDevAuditDisplay();
+      }
+    }
+  });
+
+  if (devTestTrigger && devTestPanel) {
     devTestTrigger.addEventListener('click', () => {
       devTestPanel.classList.toggle('open');
       updateDevAuditDisplay();
@@ -279,14 +293,6 @@ document.addEventListener('DOMContentLoaded', () => {
         devTestPanel.classList.remove('open');
       });
     }
-
-    // Keyboard shortcut: Ctrl + Shift + T or Alt + T
-    window.addEventListener('keydown', (e) => {
-      if ((e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 't') || (e.altKey && e.key.toLowerCase() === 't')) {
-        e.preventDefault();
-        devTestPanel.classList.toggle('open');
-      }
-    });
 
     // Test Actions
     document.querySelectorAll('[data-test-action]').forEach(btn => {
