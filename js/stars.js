@@ -1,5 +1,6 @@
 /* ==========================================================================
-   THE DUKHI AATMA CHRONICLES - CELESTIAL CANVAS & CONSTELLATION PARTICLES
+   THE DUKHI AATMA CHRONICLES - CELESTIAL CANVAS & BIRTHDAY PARTICLES
+   Stars, gentle floating birthday balloons, drifting festive confetti & nebulae.
    ========================================================================== */
 
 class CelestialCanvas {
@@ -8,6 +9,8 @@ class CelestialCanvas {
     if (!this.canvas) return;
     this.ctx = this.canvas.getContext('2d');
     this.stars = [];
+    this.balloons = [];
+    this.confetti = [];
     this.shootingStars = [];
     this.mouseX = -1000;
     this.mouseY = -1000;
@@ -22,10 +25,13 @@ class CelestialCanvas {
   init() {
     this.resize();
     this.createStars();
+    this.createBalloons();
+    this.createConfetti();
 
     window.addEventListener('resize', () => {
       this.resize();
       this.createStars();
+      this.createBalloons();
     });
 
     window.addEventListener('mousemove', (e) => {
@@ -55,39 +61,78 @@ class CelestialCanvas {
 
   createStars() {
     this.stars = [];
-    const count = Math.min(180, Math.floor((this.width * this.height) / 7500));
-    const colors = [
-      '#ffffff',
-      '#fef08a', // pale gold
-      '#c4b5fd', // soft lavender
-      '#f472b6', // soft pink
-      '#bae6fd'  // ice blue
-    ];
+    const count = Math.min(120, Math.floor((this.width * this.height) / 8500));
+    const colors = ['#ffffff', '#fef08a', '#c4b5fd', '#f472b6', '#bae6fd'];
 
     for (let i = 0; i < count; i++) {
       this.stars.push({
         x: Math.random() * this.width,
         y: Math.random() * this.height,
-        radius: Math.random() * 1.6 + 0.4,
-        baseAlpha: Math.random() * 0.7 + 0.3,
+        radius: Math.random() * 1.5 + 0.5,
         alpha: Math.random() * 0.7 + 0.3,
         twinkleSpeed: (Math.random() * 0.02 + 0.005) * (Math.random() > 0.5 ? 1 : -1),
         color: colors[Math.floor(Math.random() * colors.length)],
-        vx: (Math.random() - 0.5) * 0.15,
-        vy: (Math.random() - 0.5) * 0.15
+        vx: (Math.random() - 0.5) * 0.1,
+        vy: (Math.random() - 0.5) * 0.1
+      });
+    }
+  }
+
+  // Gentle Floating Birthday Balloons in Background
+  createBalloons() {
+    this.balloons = [];
+    const count = this.width < 600 ? 5 : 8;
+    const colors = [
+      'rgba(244, 114, 182, 0.45)', // soft rose
+      'rgba(196, 181, 253, 0.45)', // soft lavender
+      'rgba(254, 240, 138, 0.35)', // pale gold
+      'rgba(56, 189, 248, 0.35)'   // pastel blue
+    ];
+
+    for (let i = 0; i < count; i++) {
+      this.balloons.push({
+        x: Math.random() * this.width,
+        y: this.height + Math.random() * this.height,
+        radiusX: Math.random() * 10 + 16,
+        radiusY: Math.random() * 12 + 20,
+        speed: Math.random() * 0.4 + 0.3,
+        swaySpeed: Math.random() * 0.02 + 0.01,
+        swayOffset: Math.random() * Math.PI * 2,
+        color: colors[Math.floor(Math.random() * colors.length)]
+      });
+    }
+  }
+
+  // Soft Drifting Confetti Sparkles
+  createConfetti() {
+    this.confetti = [];
+    const count = this.width < 600 ? 25 : 45;
+    const colors = ['#f472b6', '#c4b5fd', '#fde047', '#38bdf8', '#ffffff'];
+
+    for (let i = 0; i < count; i++) {
+      this.confetti.push({
+        x: Math.random() * this.width,
+        y: Math.random() * this.height,
+        size: Math.random() * 4 + 2,
+        speedY: Math.random() * 0.5 + 0.25,
+        speedX: (Math.random() - 0.5) * 0.3,
+        rotation: Math.random() * 360,
+        rotSpeed: (Math.random() - 0.5) * 2,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        alpha: Math.random() * 0.5 + 0.3
       });
     }
   }
 
   spawnShootingStar() {
     if (this.isReducedMotion) return;
-    if (Math.random() < 0.008 && this.shootingStars.length < 2) {
+    if (Math.random() < 0.007 && this.shootingStars.length < 2) {
       this.shootingStars.push({
         x: Math.random() * this.width * 0.8,
         y: Math.random() * this.height * 0.3,
-        length: Math.random() * 80 + 40,
-        speed: Math.random() * 8 + 6,
-        angle: Math.PI / 4 + (Math.random() - 0.5) * 0.2,
+        length: Math.random() * 70 + 40,
+        speed: Math.random() * 7 + 5,
+        angle: Math.PI / 4,
         opacity: 1,
         fadeSpeed: 0.025
       });
@@ -97,76 +142,77 @@ class CelestialCanvas {
   animate() {
     this.ctx.clearRect(0, 0, this.width, this.height);
 
-    // 1. Draw and update stars
+    // 1. Draw Floating Birthday Balloons
+    if (!this.isReducedMotion) {
+      for (let i = 0; i < this.balloons.length; i++) {
+        const b = this.balloons[i];
+        b.y -= b.speed;
+        b.swayOffset += b.swaySpeed;
+        const currentX = b.x + Math.sin(b.swayOffset) * 15;
+
+        if (b.y < -50) {
+          b.y = this.height + 40;
+          b.x = Math.random() * this.width;
+        }
+
+        // Draw balloon
+        this.ctx.beginPath();
+        this.ctx.ellipse(currentX, b.y, b.radiusX, b.radiusY, 0, 0, Math.PI * 2);
+        this.ctx.fillStyle = b.color;
+        this.ctx.fill();
+
+        // Balloon string
+        this.ctx.beginPath();
+        this.ctx.moveTo(currentX, b.y + b.radiusY);
+        this.ctx.quadraticCurveTo(currentX + Math.sin(b.swayOffset) * 6, b.y + b.radiusY + 14, currentX, b.y + b.radiusY + 28);
+        this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+        this.ctx.lineWidth = 1;
+        this.ctx.stroke();
+      }
+    }
+
+    // 2. Draw Drifting Birthday Confetti
+    if (!this.isReducedMotion) {
+      for (let i = 0; i < this.confetti.length; i++) {
+        const c = this.confetti[i];
+        c.y += c.speedY;
+        c.x += c.speedX;
+        c.rotation += c.rotSpeed;
+
+        if (c.y > this.height) {
+          c.y = -10;
+          c.x = Math.random() * this.width;
+        }
+
+        this.ctx.save();
+        this.ctx.translate(c.x, c.y);
+        this.ctx.rotate((c.rotation * Math.PI) / 180);
+        this.ctx.fillStyle = c.color;
+        this.ctx.globalAlpha = c.alpha;
+        this.ctx.fillRect(-c.size / 2, -c.size / 2, c.size, c.size * 0.8);
+        this.ctx.restore();
+      }
+    }
+
+    // 3. Draw Stars
     for (let i = 0; i < this.stars.length; i++) {
       const star = this.stars[i];
 
       if (!this.isReducedMotion) {
         star.alpha += star.twinkleSpeed;
-        if (star.alpha > 0.95 || star.alpha < 0.15) {
+        if (star.alpha > 0.9 || star.alpha < 0.2) {
           star.twinkleSpeed = -star.twinkleSpeed;
         }
-
-        star.x += star.vx;
-        star.y += star.vy;
-
-        if (star.x < 0) star.x = this.width;
-        if (star.x > this.width) star.x = 0;
-        if (star.y < 0) star.y = this.height;
-        if (star.y > this.height) star.y = 0;
       }
 
       this.ctx.beginPath();
       this.ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
       this.ctx.fillStyle = star.color;
       this.ctx.globalAlpha = star.alpha;
-      this.ctx.shadowBlur = star.radius > 1.2 ? 8 : 0;
-      this.ctx.shadowColor = star.color;
       this.ctx.fill();
     }
 
-    // 2. Interactive Constellation Lines between nearby stars & cursor
-    if (!this.isReducedMotion) {
-      this.ctx.lineWidth = 0.5;
-      for (let i = 0; i < this.stars.length; i++) {
-        const starA = this.stars[i];
-
-        // Connect nearby stars
-        for (let j = i + 1; j < this.stars.length; j++) {
-          const starB = this.stars[j];
-          const dx = starA.x - starB.x;
-          const dy = starA.y - starB.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < 75) {
-            this.ctx.beginPath();
-            this.ctx.moveTo(starA.x, starA.y);
-            this.ctx.lineTo(starB.x, starB.y);
-            this.ctx.strokeStyle = '#c4b5fd';
-            this.ctx.globalAlpha = (1 - dist / 75) * 0.15;
-            this.ctx.stroke();
-          }
-        }
-
-        // Connect to mouse cursor
-        if (this.mouseX > 0) {
-          const dx = starA.x - this.mouseX;
-          const dy = starA.y - this.mouseY;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < 110) {
-            this.ctx.beginPath();
-            this.ctx.moveTo(starA.x, starA.y);
-            this.ctx.lineTo(this.mouseX, this.mouseY);
-            this.ctx.strokeStyle = '#f472b6';
-            this.ctx.globalAlpha = (1 - dist / 110) * 0.35;
-            this.ctx.stroke();
-          }
-        }
-      }
-    }
-
-    // 3. Shooting stars
+    // 4. Shooting Stars
     this.spawnShootingStar();
     for (let i = this.shootingStars.length - 1; i >= 0; i--) {
       const s = this.shootingStars[i];
@@ -175,14 +221,13 @@ class CelestialCanvas {
 
       const grad = this.ctx.createLinearGradient(s.x, s.y, endX, endY);
       grad.addColorStop(0, `rgba(255, 255, 255, ${s.opacity})`);
-      grad.addColorStop(0.5, `rgba(196, 181, 253, ${s.opacity * 0.6})`);
       grad.addColorStop(1, 'rgba(196, 181, 253, 0)');
 
       this.ctx.beginPath();
       this.ctx.moveTo(s.x, s.y);
       this.ctx.lineTo(endX, endY);
       this.ctx.strokeStyle = grad;
-      this.ctx.lineWidth = 1.5;
+      this.ctx.lineWidth = 1.2;
       this.ctx.globalAlpha = s.opacity;
       this.ctx.stroke();
 
@@ -196,8 +241,6 @@ class CelestialCanvas {
     }
 
     this.ctx.globalAlpha = 1;
-    this.ctx.shadowBlur = 0;
-
     this.animId = requestAnimationFrame(() => this.animate());
   }
 }

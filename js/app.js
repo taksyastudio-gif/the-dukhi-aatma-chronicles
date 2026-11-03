@@ -386,43 +386,137 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // =========================================================================
-  // INTERACTIVE AIRDROP CRATE LOOTING
+  // INTERACTIVE FREE FIRE AIRDROP SEQUENTIAL UNBOXING CONTROLLER
   // =========================================================================
   const airdropCrate = document.getElementById('airdrop-crate-stage');
+  const ffModal = document.getElementById('ff-airdrop-modal');
+  const ffItemStage = document.getElementById('ff-item-stage');
+  const ffItemIcon = document.getElementById('ff-item-icon');
+  const ffItemRarity = document.getElementById('ff-item-rarity');
+  const ffItemTitle = document.getElementById('ff-item-title');
+  const ffItemDesc = document.getElementById('ff-item-desc');
+  const ffStepDots = document.querySelectorAll('.ff-step-dot');
+  const btnClaimNext = document.getElementById('btn-ff-claim-next');
   const lootGrid = document.getElementById('loot-grid');
 
-  if (airdropCrate && lootGrid) {
+  const FF_REWARDS = [
+    {
+      icon: '🪖',
+      rarity: 'LEGENDARY ARMOR',
+      title: 'Level 3 Helmet',
+      desc: 'Heavy-duty protection against emotional damage, sad playlist loops, and accidental overthinking.',
+      btnText: 'Claim Reward (1/4) ➔'
+    },
+    {
+      icon: '🩹',
+      rarity: 'INSTANT REVIVE',
+      title: 'Super Medkit',
+      desc: 'Instantly restores 100% HP & sanity after grueling hotel management shifts and endless customer interactions.',
+      btnText: 'Claim Reward (2/4) ➔'
+    },
+    {
+      icon: '⚡',
+      rarity: 'MIDNIGHT BOOST',
+      title: 'Adrenaline Syringe',
+      desc: 'Unlocks sudden 2 AM superhuman typing speed for random midnight theories and snack debates.',
+      btnText: 'Claim Reward (3/4) ➔'
+    },
+    {
+      icon: '🏆',
+      rarity: 'MYTHIC • ULTRA RARE',
+      title: 'Birthday Booyah Trophy',
+      desc: 'Celebrating ~1 year since our random drop on Girlfriend Day in Free Fire. Conferred upon the one and only Alsesha!',
+      btnText: '★ EQUIP ALL & CELEBRATE BOOYAH! ★'
+    }
+  ];
+
+  let currentRewardIndex = 0;
+
+  function renderReward(index) {
+    const reward = FF_REWARDS[index];
+    if (!reward) return;
+
+    if (ffItemStage) {
+      ffItemStage.classList.remove('pop-in');
+      void ffItemStage.offsetWidth; // Trigger reflow
+      ffItemStage.classList.add('pop-in');
+    }
+
+    if (ffItemIcon) ffItemIcon.textContent = reward.icon;
+    if (ffItemRarity) ffItemRarity.textContent = reward.rarity;
+    if (ffItemTitle) ffItemTitle.textContent = reward.title;
+    if (ffItemDesc) ffItemDesc.textContent = reward.desc;
+    if (btnClaimNext) btnClaimNext.textContent = reward.btnText;
+
+    ffStepDots.forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === index);
+    });
+  }
+
+  if (airdropCrate && ffModal) {
     airdropCrate.addEventListener('click', () => {
-      const isAlreadyOpen = lootGrid.classList.contains('open');
-      lootGrid.classList.toggle('open');
+      currentRewardIndex = 0;
+      renderReward(currentRewardIndex);
+      ffModal.classList.add('open');
+      ffModal.setAttribute('aria-hidden', 'false');
 
-      if (!isAlreadyOpen && window.audioController) {
-        window.audioController.playCelestialArpeggio();
+      if (window.audioController) {
+        window.audioController.playCrateFanfare();
       }
+    });
+  }
 
-      if (!isAlreadyOpen) {
-        // Soft sparkle burst
-        const rect = airdropCrate.getBoundingClientRect();
-        for (let i = 0; i < 18; i++) {
+  if (btnClaimNext && ffModal) {
+    btnClaimNext.addEventListener('click', () => {
+      if (currentRewardIndex < FF_REWARDS.length - 1) {
+        currentRewardIndex++;
+        renderReward(currentRewardIndex);
+        if (window.audioController) {
+          window.audioController.playItemPop();
+        }
+      } else {
+        // Final reward claimed - BOOYAH celebration!
+        if (window.audioController) {
+          window.audioController.playYesCelebration();
+        }
+
+        // Confetti explosion
+        for (let i = 0; i < 35; i++) {
           const p = document.createElement('div');
           p.className = 'celebration-sparkle';
-          const size = Math.random() * 7 + 3;
+          const size = Math.random() * 8 + 4;
+          const colors = ['#f472b6', '#fbbf24', '#38bdf8', '#a78bfa', '#4ade80'];
           p.style.cssText = `
             position: fixed;
             width: ${size}px;
             height: ${size}px;
-            border-radius: 50%;
-            background: #f472b6;
-            left: ${rect.left + rect.width / 2 + (Math.random() - 0.5) * 80}px;
-            top: ${rect.top + 30 + (Math.random() - 0.5) * 50}px;
+            border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+            background: ${colors[Math.floor(Math.random() * colors.length)]};
+            left: ${Math.random() * 100}vw;
+            top: ${Math.random() * 50 + 10}vh;
             pointer-events: none;
-            box-shadow: 0 0 10px #f472b6;
-            animation: floatSparkle 1.8s ease-out forwards;
-            z-index: 100;
+            box-shadow: 0 0 12px currentColor;
+            animation: floatSparkle 2.2s ease-out forwards;
+            z-index: 1050;
           `;
           document.body.appendChild(p);
-          setTimeout(() => p.remove(), 1800);
+          setTimeout(() => p.remove(), 2200);
         }
+
+        ffModal.classList.remove('open');
+        ffModal.setAttribute('aria-hidden', 'true');
+
+        if (lootGrid) {
+          lootGrid.classList.add('open');
+        }
+
+        const crateLabel = airdropCrate.querySelector('.crate-label');
+        if (crateLabel) {
+          crateLabel.textContent = 'BOOYAH! EQUIPPED ★';
+          crateLabel.style.color = '#fbbf24';
+        }
+
+        showToast('🏆 BOOYAH! All 4 Birthday Airdrop rewards claimed & equipped!');
       }
     });
   }

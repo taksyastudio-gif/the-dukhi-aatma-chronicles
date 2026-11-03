@@ -1,18 +1,20 @@
 /* ==========================================================================
-   THE DUKHI AATMA CHRONICLES - PROCEDURAL WEB AUDIO SOUNDSCAPE
+   THE DUKHI AATMA CHRONICLES - PROCEDURAL ELECTRONIC SOUNDTRACK & SFX
    100% Client-Side Web Audio API Synthesis.
-   Zero external audio files, zero copyright dependencies, zero network latency.
+   Melodic electronic background loop + interactive gaming fanfares & chimes.
    ========================================================================== */
 
 class AudioController {
   constructor() {
     this.ctx = null;
     this.isEnabled = false;
-    this.ambientGain = null;
-    this.droneOscillators = [];
-    this.chimeInterval = null;
     this.isMuted = true;
-    
+    this.masterGain = null;
+    this.bgmGain = null;
+    this.bgmLoopTimer = null;
+    this.melodyStep = 0;
+    this.isPlayingBgm = false;
+
     // Check saved preference
     const saved = localStorage.getItem(CONFIG.storageKeys.audioEnabled);
     if (saved === "true") {
@@ -26,6 +28,14 @@ class AudioController {
       const AudioContext = window.AudioContext || window.webkitAudioContext;
       if (!AudioContext) return;
       this.ctx = new AudioContext();
+
+      this.masterGain = this.ctx.createGain();
+      this.masterGain.gain.setValueAtTime(0.7, this.ctx.currentTime);
+      this.masterGain.connect(this.ctx.destination);
+
+      this.bgmGain = this.ctx.createGain();
+      this.bgmGain.gain.setValueAtTime(0.001, this.ctx.currentTime);
+      this.bgmGain.connect(this.masterGain);
     } catch (e) {
       console.warn("Web Audio API not supported in this environment", e);
     }
@@ -44,10 +54,10 @@ class AudioController {
     localStorage.setItem(CONFIG.storageKeys.audioEnabled, (!this.isMuted).toString());
 
     if (!this.isMuted) {
-      this.startAmbient();
-      this.playChime();
+      this.startElectronicBgm();
+      this.playChime(587.33);
     } else {
-      this.stopAmbient();
+      this.stopElectronicBgm();
     }
 
     if (typeof onStateChange === "function") {
@@ -57,86 +67,156 @@ class AudioController {
     return !this.isMuted;
   }
 
-  startAmbient() {
-    if (this.isMuted || !this.ctx) return;
-    if (this.droneOscillators.length > 0) return; // Already running
+  // =========================================================================
+  // CONTINUOUS ELECTRONIC LO-FI MELODIC BGM
+  // =========================================================================
+  startElectronicBgm() {
+    if (this.isMuted || !this.ctx || this.isPlayingBgm) return;
+    this.isPlayingBgm = true;
 
-    try {
-      const now = this.ctx.currentTime;
+    const now = this.ctx.currentTime;
+    this.bgmGain.gain.cancelScheduledValues(now);
+    this.bgmGain.gain.setValueAtTime(0.001, now);
+    this.bgmGain.gain.linearRampToValueAtTime(0.08, now + 2);
 
-      // Master Ambient Bus
-      this.ambientGain = this.ctx.createGain();
-      this.ambientGain.gain.setValueAtTime(0.001, now);
-      this.ambientGain.gain.exponentialRampToValueAtTime(0.045, now + 3); // Soft fade-in
-      this.ambientGain.connect(this.ctx.destination);
+    // Progression: Fmaj7 -> G6 -> Am7 -> Em7 (Warm, romantic, dreamy electronic loop)
+    const chords = [
+      [174.61, 220.00, 261.63, 329.63], // F3, A3, C4, E4 (Fmaj7)
+      [196.00, 246.94, 293.66, 392.00], // G3, B3, D4, G4 (G6)
+      [220.00, 261.63, 329.63, 392.00], // A3, C4, E4, G4 (Am7)
+      [164.81, 196.00, 246.94, 329.63]  // E3, G3, B3, E4 (Em7)
+    ];
 
-      // Lowpass Filter for warmth
-      const filter = this.ctx.createBiquadFilter();
-      filter.type = "lowpass";
-      filter.frequency.setValueAtTime(450, now);
-      filter.connect(this.ambientGain);
+    // Melodic sequence on top
+    const melody = [
+      [523.25, 659.25, 783.99], // C5, E5, G5
+      [587.33, 783.99, 880.00], // D5, G5, A5
+      [659.25, 880.00, 1046.50], // E5, A5, C6
+      [587.33, 659.25, 783.99]  // D5, E5, G5
+    ];
 
-      // Frequencies for a soft celestial triad in F major / D minor (warm, dreamy, intimate)
-      // F3 (174.6Hz), A3 (220.0Hz), C4 (261.6Hz), E4 (329.6Hz)
-      const freqs = [174.61, 220.00, 261.63, 329.63];
+    let chordIndex = 0;
 
-      freqs.forEach((freq, idx) => {
+    const playChordStep = () => {
+      if (!this.isPlayingBgm || !this.ctx) return;
+      const t = this.ctx.currentTime;
+
+      // 1. Play Soft Synth Pad Chord
+      const curChord = chords[chordIndex % chords.length];
+      curChord.forEach((freq, i) => {
         const osc = this.ctx.createOscillator();
-        osc.type = idx % 2 === 0 ? "sine" : "triangle";
-        osc.frequency.setValueAtTime(freq, now);
+        const gain = this.ctx.createGain();
+        osc.type = i === 0 ? "sine" : "triangle";
+        osc.frequency.setValueAtTime(freq, t);
 
-        // Individual slight detune for cosmic shimmer
-        osc.detune.setValueAtTime((idx - 1.5) * 4, now);
+        gain.gain.setValueAtTime(0.0001, t);
+        gain.gain.linearRampToValueAtTime(0.025, t + 0.4);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + 3.8);
 
-        // Sub gain node
-        const oscGain = this.ctx.createGain();
-        oscGain.gain.setValueAtTime(0.2, now);
-
-        osc.connect(oscGain);
-        oscGain.connect(filter);
-        osc.start();
-
-        this.droneOscillators.push(osc);
+        osc.connect(gain);
+        gain.connect(this.bgmGain);
+        osc.start(t);
+        osc.stop(t + 4.0);
       });
 
-      // Schedule occasional soft celestial wind-chimes every 9-16 seconds
-      this.chimeInterval = setInterval(() => {
-        if (!this.isMuted && Math.random() > 0.3) {
-          this.playCelestialArpeggio();
-        }
-      }, 11000);
+      // 2. Play Gentle Arpeggiated Melody Notes
+      const curMelody = melody[chordIndex % melody.length];
+      curMelody.forEach((freq, idx) => {
+        const noteTime = t + idx * 0.9;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(freq, noteTime);
 
-    } catch (e) {
-      console.warn("Could not start ambient synthesizer", e);
+        gain.gain.setValueAtTime(0.0001, noteTime);
+        gain.gain.linearRampToValueAtTime(0.035, noteTime + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.0001, noteTime + 1.2);
+
+        osc.connect(gain);
+        gain.connect(this.bgmGain);
+        osc.start(noteTime);
+        osc.stop(noteTime + 1.3);
+      });
+
+      chordIndex++;
+    };
+
+    playChordStep();
+    this.bgmLoopTimer = setInterval(playChordStep, 4000);
+  }
+
+  stopElectronicBgm() {
+    this.isPlayingBgm = false;
+    if (this.bgmLoopTimer) {
+      clearInterval(this.bgmLoopTimer);
+      this.bgmLoopTimer = null;
+    }
+    if (this.ctx && this.bgmGain) {
+      const now = this.ctx.currentTime;
+      this.bgmGain.gain.cancelScheduledValues(now);
+      this.bgmGain.gain.setValueAtTime(this.bgmGain.gain.value, now);
+      this.bgmGain.exponentialRampToValueAtTime(0.0001, now + 0.8);
     }
   }
 
-  stopAmbient() {
-    if (!this.ctx || this.droneOscillators.length === 0) return;
+  // =========================================================================
+  // SOUND EFFECTS: REWARDS, FANFARE, CHIMES
+  // =========================================================================
 
+  // Free Fire Style Loot Fanfare
+  playCrateFanfare() {
+    if (this.isMuted || !this.ctx) return;
     try {
       const now = this.ctx.currentTime;
-      if (this.ambientGain) {
-        this.ambientGain.gain.setValueAtTime(this.ambientGain.gain.value, now);
-        this.ambientGain.gain.exponentialRampToValueAtTime(0.0001, now + 1.2);
-      }
+      // High-energy electronic celebration fanfare: C5, E5, G5, C6 (staccato -> sustained)
+      const notes = [
+        { f: 523.25, t: 0.00, d: 0.12 },
+        { f: 659.25, t: 0.10, d: 0.12 },
+        { f: 783.99, t: 0.20, d: 0.15 },
+        { f: 1046.50, t: 0.35, d: 0.80 }
+      ];
 
-      setTimeout(() => {
-        this.droneOscillators.forEach(osc => {
-          try { osc.stop(); osc.disconnect(); } catch (err) {}
-        });
-        this.droneOscillators = [];
-        if (this.chimeInterval) {
-          clearInterval(this.chimeInterval);
-          this.chimeInterval = null;
-        }
-      }, 1300);
-    } catch (e) {
-      console.warn("Error stopping ambient", e);
-    }
+      notes.forEach(({ f, t, d }) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(f, now + t);
+
+        gain.gain.setValueAtTime(0.0001, now + t);
+        gain.gain.linearRampToValueAtTime(0.08, now + t + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + t + d);
+
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+        osc.start(now + t);
+        osc.stop(now + t + d + 0.1);
+      });
+    } catch (e) {}
   }
 
-  // Soft single chime note (pentatonic scale)
+  // Item Unbox Pop Sound
+  playItemPop() {
+    if (this.isMuted || !this.ctx) return;
+    try {
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(440, now);
+      osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
+
+      gain.gain.setValueAtTime(0.06, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.25);
+
+      osc.connect(gain);
+      gain.connect(this.masterGain);
+      osc.start(now);
+      osc.stop(now + 0.26);
+    } catch (e) {}
+  }
+
+  // Soft Chime
   playChime(freq = 523.25) {
     if (this.isMuted || !this.ctx) return;
     try {
@@ -148,116 +228,46 @@ class AudioController {
       osc.frequency.setValueAtTime(freq, now);
 
       gain.gain.setValueAtTime(0.001, now);
-      gain.gain.linearRampToValueAtTime(0.05, now + 0.03);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.5);
+      gain.gain.linearRampToValueAtTime(0.06, now + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.8);
 
       osc.connect(gain);
-      gain.connect(this.ctx.destination);
-
+      gain.connect(this.masterGain);
       osc.start(now);
-      osc.stop(now + 2.6);
+      osc.stop(now + 1.9);
     } catch (e) {}
   }
 
-  // Gentle celestial arpeggio
-  playCelestialArpeggio() {
-    if (this.isMuted || !this.ctx) return;
-    const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
-    notes.forEach((freq, idx) => {
-      setTimeout(() => {
-        this.playChime(freq);
-      }, idx * 260);
-    });
-  }
-
-  // Gentle music box synthesized "Happy Birthday" melody
-  playMusicBoxBirthday() {
-    if (this.isMuted || !this.ctx) return;
-    try {
-      const now = this.ctx.currentTime;
-      const notes = [
-        { f: 392.00, d: 0.35, t: 0.0 },   // G4
-        { f: 392.00, d: 0.35, t: 0.4 },   // G4
-        { f: 440.00, d: 0.65, t: 0.8 },   // A4
-        { f: 392.00, d: 0.65, t: 1.5 },   // G4
-        { f: 523.25, d: 0.65, t: 2.2 },   // C5
-        { f: 493.88, d: 1.10, t: 2.9 },   // B4
-
-        { f: 392.00, d: 0.35, t: 4.2 },   // G4
-        { f: 392.00, d: 0.35, t: 4.6 },   // G4
-        { f: 440.00, d: 0.65, t: 5.0 },   // A4
-        { f: 392.00, d: 0.65, t: 5.7 },   // G4
-        { f: 587.33, d: 0.65, t: 6.4 },   // D5
-        { f: 523.25, d: 1.10, t: 7.1 },   // C5
-
-        { f: 392.00, d: 0.35, t: 8.4 },   // G4
-        { f: 392.00, d: 0.35, t: 8.8 },   // G4
-        { f: 783.99, d: 0.65, t: 9.2 },   // G5
-        { f: 659.25, d: 0.65, t: 9.9 },   // E5
-        { f: 523.25, d: 0.65, t: 10.6 },  // C5
-        { f: 493.88, d: 0.65, t: 11.3 },  // B4
-        { f: 440.00, d: 1.10, t: 12.0 },  // A4
-
-        { f: 698.46, d: 0.35, t: 13.3 },  // F5
-        { f: 698.46, d: 0.35, t: 13.7 },  // F5
-        { f: 659.25, d: 0.65, t: 14.1 },  // E5
-        { f: 523.25, d: 0.65, t: 14.8 },  // C5
-        { f: 587.33, d: 0.65, t: 15.5 },  // D5
-        { f: 523.25, d: 1.40, t: 16.2 }   // C5
-      ];
-
-      notes.forEach(({ f, d, t }) => {
-        const osc = this.ctx.createOscillator();
-        const gain = this.ctx.createGain();
-        osc.type = "sine";
-        osc.frequency.setValueAtTime(f, now + t);
-
-        gain.gain.setValueAtTime(0.0001, now + t);
-        gain.gain.linearRampToValueAtTime(0.045, now + t + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + t + d + 0.8);
-
-        osc.connect(gain);
-        gain.connect(this.ctx.destination);
-
-        osc.start(now + t);
-        osc.stop(now + t + d + 0.9);
-      });
-    } catch (e) {}
-  }
-
-  // Sound effect: Opening the wax-sealed envelope
+  // Envelope Open Sound
   playEnvelopeOpen() {
     if (this.isMuted || !this.ctx) return;
     try {
       const now = this.ctx.currentTime;
-      // Shimmer sweep
       const freqs = [440, 554.37, 659.25, 880, 1108.73, 1318.51];
       freqs.forEach((freq, i) => {
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.type = "sine";
-        osc.frequency.setValueAtTime(freq, now + i * 0.08);
+        osc.frequency.setValueAtTime(freq, now + i * 0.06);
 
-        gain.gain.setValueAtTime(0.001, now + i * 0.08);
-        gain.gain.linearRampToValueAtTime(0.04, now + i * 0.08 + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.08 + 1.8);
+        gain.gain.setValueAtTime(0.001, now + i * 0.06);
+        gain.gain.linearRampToValueAtTime(0.05, now + i * 0.06 + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + i * 0.06 + 1.5);
 
         osc.connect(gain);
-        gain.connect(this.ctx.destination);
-
-        osc.start(now + i * 0.08);
-        osc.stop(now + i * 0.08 + 1.9);
+        gain.connect(this.masterGain);
+        osc.start(now + i * 0.06);
+        osc.stop(now + i * 0.06 + 1.6);
       });
     } catch (e) {}
   }
 
-  // Sound effect: YES celebration chord
+  // YES Celebration Chord
   playYesCelebration() {
     if (this.isMuted || !this.ctx) return;
     try {
       const now = this.ctx.currentTime;
-      // Uplifting sparkling major chord with harmonic overtones
-      const chord = [392.00, 493.88, 587.33, 783.99, 987.77]; // G major 7
+      const chord = [392.00, 493.88, 587.33, 783.99, 987.77];
       chord.forEach((freq) => {
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
@@ -265,24 +275,23 @@ class AudioController {
         osc.frequency.setValueAtTime(freq, now);
 
         gain.gain.setValueAtTime(0.001, now);
-        gain.gain.linearRampToValueAtTime(0.06, now + 0.05);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 3.5);
+        gain.gain.linearRampToValueAtTime(0.07, now + 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 3.0);
 
         osc.connect(gain);
-        gain.connect(this.ctx.destination);
-
+        gain.connect(this.masterGain);
         osc.start(now);
-        osc.stop(now + 3.6);
+        osc.stop(now + 3.1);
       });
     } catch (e) {}
   }
 
-  // Sound effect: Gentle warm wistful chord for NO stages
+  // Gentle NO sound
   playNoGentle() {
     if (this.isMuted || !this.ctx) return;
     try {
       const now = this.ctx.currentTime;
-      const notes = [329.63, 392.00, 493.88]; // E minor mellow
+      const notes = [329.63, 392.00, 493.88];
       notes.forEach((freq) => {
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
@@ -290,16 +299,22 @@ class AudioController {
         osc.frequency.setValueAtTime(freq, now);
 
         gain.gain.setValueAtTime(0.001, now);
-        gain.gain.linearRampToValueAtTime(0.035, now + 0.04);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.0);
+        gain.gain.linearRampToValueAtTime(0.04, now + 0.03);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.8);
 
         osc.connect(gain);
-        gain.connect(this.ctx.destination);
-
+        gain.connect(this.masterGain);
         osc.start(now);
-        osc.stop(now + 2.1);
+        osc.stop(now + 1.9);
       });
     } catch (e) {}
+  }
+
+  playCelestialArpeggio() {
+    const notes = [523.25, 659.25, 783.99, 1046.50];
+    notes.forEach((freq, idx) => {
+      setTimeout(() => this.playChime(freq), idx * 220);
+    });
   }
 }
 
