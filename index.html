@@ -185,8 +185,40 @@
           </p>
         </article>
 
+        <!-- Auto-Scroll & Guided Navigation Controls -->
+        <div class="story-controls-bar">
+          <button id="btn-toggle-autoscroll" class="btn-story-mode" type="button" aria-label="Toggle story auto scroll">
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <span id="autoscroll-btn-label">Auto-Scroll Story</span>
+          </button>
+          
+          <button id="btn-scroll-timeline" class="btn-scroll-next" type="button">
+            Explore our journey ↓
+          </button>
+        </div>
+
+        <!-- Interactive Birthday Candle ("Make a Wish") -->
+        <section class="candle-interactive-section" aria-label="Birthday Candle Wish">
+          <h2 class="candle-title">Make a Midnight Wish</h2>
+          <p class="candle-subtitle">Close your eyes, think of your secret wish, and tap the candle flame.</p>
+
+          <div id="candle-stage" class="candle-container" role="button" tabindex="0" aria-label="Interactive candle. Tap to blow out and seal your wish.">
+            <div id="candle-flame" class="candle-flame"></div>
+            <div class="candle-wick"></div>
+            <div class="candle-wax"></div>
+          </div>
+
+          <div id="wish-unlocked-card" class="wish-unlocked-card">
+            <p class="wish-unlocked-text">
+              ✨ "Wish sealed in the midnight stars. May this new year bring you all the peace, laughter, and light you deserve."
+            </p>
+          </div>
+        </section>
+
         <!-- One-Year Friendship Timeline -->
-        <section class="timeline-section" aria-label="One-Year Friendship Timeline">
+        <section id="timeline-section" class="timeline-section" aria-label="One-Year Friendship Timeline">
           <div class="section-header-wrap">
             <span class="section-label">Memory Constellation</span>
             <h2 class="section-title">One Year in Orbit</h2>

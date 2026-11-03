@@ -171,8 +171,132 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Dynamic date labels update from CONFIG
   document.querySelectorAll('.date-display-label').forEach(el => {
-    el.textContent = CONFIG.displayDateFormatted || "November";
+    el.textContent = CONFIG.displayDateFormatted || "November 4";
   });
+
+  // =========================================================================
+  // AUTO-SCROLL ENGINE & GUIDED READING
+  // =========================================================================
+  const btnToggleAutoScroll = document.getElementById('btn-toggle-autoscroll');
+  const autoscrollBtnLabel = document.getElementById('autoscroll-btn-label');
+  const btnScrollTimeline = document.getElementById('btn-scroll-timeline');
+  let isAutoScrolling = false;
+  let autoScrollRafId = null;
+
+  function stopAutoScroll() {
+    if (!isAutoScrolling) return;
+    isAutoScrolling = false;
+    if (autoScrollRafId) {
+      cancelAnimationFrame(autoScrollRafId);
+      autoScrollRafId = null;
+    }
+    if (btnToggleAutoScroll) {
+      btnToggleAutoScroll.classList.remove('active');
+    }
+    if (autoscrollBtnLabel) {
+      autoscrollBtnLabel.textContent = 'Auto-Scroll Story';
+    }
+  }
+
+  function startAutoScroll() {
+    if (isAutoScrolling) return;
+    isAutoScrolling = true;
+    if (btnToggleAutoScroll) {
+      btnToggleAutoScroll.classList.add('active');
+    }
+    if (autoscrollBtnLabel) {
+      autoscrollBtnLabel.textContent = '⏸️ Pause Auto-Scroll';
+    }
+
+    let lastTime = performance.now();
+    const scrollSpeed = 40; // pixels per second
+
+    function step(currentTime) {
+      if (!isAutoScrolling) return;
+      const deltaTime = (currentTime - lastTime) / 1000;
+      lastTime = currentTime;
+
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (window.scrollY >= maxScroll - 5) {
+        stopAutoScroll();
+        return;
+      }
+
+      window.scrollBy(0, scrollSpeed * deltaTime);
+      autoScrollRafId = requestAnimationFrame(step);
+    }
+
+    autoScrollRafId = requestAnimationFrame(step);
+  }
+
+  if (btnToggleAutoScroll) {
+    btnToggleAutoScroll.addEventListener('click', () => {
+      if (isAutoScrolling) {
+        stopAutoScroll();
+      } else {
+        startAutoScroll();
+      }
+    });
+  }
+
+  // User manual scroll or touch pauses auto-scroll naturally
+  window.addEventListener('wheel', () => stopAutoScroll(), { passive: true });
+  window.addEventListener('touchstart', () => stopAutoScroll(), { passive: true });
+
+  if (btnScrollTimeline) {
+    btnScrollTimeline.addEventListener('click', () => {
+      const target = document.getElementById('timeline-section');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  }
+
+  // =========================================================================
+  // INTERACTIVE BIRTHDAY CANDLE ("MAKE A WISH")
+  // =========================================================================
+  const candleStage = document.getElementById('candle-stage');
+  const wishUnlockedCard = document.getElementById('wish-unlocked-card');
+
+  if (candleStage) {
+    candleStage.addEventListener('click', () => {
+      if (candleStage.classList.contains('blown')) return;
+      candleStage.classList.add('blown');
+
+      if (window.audioController) {
+        window.audioController.playCelestialArpeggio();
+      }
+
+      // Sparkles around candle
+      const rect = candleStage.getBoundingClientRect();
+      for (let i = 0; i < 15; i++) {
+        const p = document.createElement('div');
+        p.className = 'celebration-sparkle';
+        const size = Math.random() * 6 + 3;
+        p.style.cssText = `
+          position: fixed;
+          width: ${size}px;
+          height: ${size}px;
+          border-radius: 50%;
+          background: #fbbf24;
+          left: ${rect.left + rect.width / 2 + (Math.random() - 0.5) * 60}px;
+          top: ${rect.top + 20 + (Math.random() - 0.5) * 40}px;
+          pointer-events: none;
+          box-shadow: 0 0 10px #fbbf24;
+          animation: floatSparkle 1.6s ease-out forwards;
+          z-index: 100;
+        `;
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 1600);
+      }
+
+      setTimeout(() => {
+        if (wishUnlockedCard) {
+          wishUnlockedCard.classList.add('show');
+        }
+      }, 400);
+    });
+  }
   function setupWhatsAppLinks() {
     const btnYes = document.getElementById('btn-send-whatsapp-yes');
     const btnNo = document.getElementById('btn-send-whatsapp-no');
