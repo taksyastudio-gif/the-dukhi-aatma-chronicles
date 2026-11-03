@@ -183,24 +183,45 @@
 }
 
 @media (max-width: 480px) {
+  .opening-view {
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    max-height: 100dvh;
+    overflow: hidden;
+    padding: calc(3.6rem + env(safe-area-inset-top)) 0.75rem calc(1rem + env(safe-area-inset-bottom));
+  }
+  .opening-invitation {
+    font-size: 1.55rem;
+    margin-bottom: 0.2rem;
+  }
+  .opening-subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 1.2rem;
+  }
   .envelope-stage {
-    width: 280px;
-    height: 195px;
+    width: 260px;
+    height: 180px;
+    margin-bottom: 1.5rem;
   }
   .envelope-flap {
-    border-left-width: 140px;
-    border-right-width: 140px;
-    border-top-width: 105px;
+    border-left-width: 130px;
+    border-right-width: 130px;
+    border-top-width: 95px;
   }
   .envelope-pocket {
-    border-left-width: 140px;
-    border-right-width: 140px;
-    border-bottom-width: 105px;
-    border-top-width: 90px;
+    border-left-width: 130px;
+    border-right-width: 130px;
+    border-bottom-width: 95px;
+    border-top-width: 80px;
   }
   .wax-seal {
-    top: 90px;
-    width: 50px;
-    height: 50px;
+    top: 80px;
+    width: 46px;
+    height: 46px;
+  }
+  .open-surprise-btn {
+    font-size: 1rem;
+    padding: 0.8rem 1.8rem;
   }
 }

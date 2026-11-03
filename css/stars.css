@@ -43,13 +43,23 @@
 /* Crescent Moon Graphic */
 .celestial-moon-wrap {
   position: absolute;
-  top: 6rem;
-  right: 10%;
-  width: 60px;
-  height: 60px;
+  top: 5rem;
+  right: 8%;
+  width: 50px;
+  height: 50px;
   z-index: 3;
   pointer-events: none;
   opacity: 0.85;
+}
+
+@media (max-width: 600px) {
+  .celestial-moon-wrap {
+    top: 3.8rem;
+    right: 1.2rem;
+    width: 32px;
+    height: 32px;
+    opacity: 0.45;
+  }
 }
 
 .celestial-moon {

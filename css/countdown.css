@@ -166,46 +166,79 @@
   gap: 0.35rem;
 }
 
-/* Mobile Adjustments */
+/* Mobile Adjustments - Fits Exactly 1 Screen with ZERO Unwanted Scrolling */
 @media (max-width: 600px) {
   .countdown-view {
-    padding: 5.2rem var(--space-xs) 2.5rem;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    max-height: 100dvh;
+    overflow: hidden;
+    padding: calc(3.6rem + env(safe-area-inset-top)) 0.75rem calc(0.75rem + env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+  }
+
+  .countdown-card {
+    padding: 1.1rem 0.9rem;
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 380px;
+  }
+
+  .countdown-pretitle {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.2rem;
+  }
+
+  .countdown-headline {
+    font-size: 1.35rem;
+    line-height: 1.25;
+    margin-bottom: 0.25rem;
+  }
+
+  .countdown-tagline {
+    font-size: 0.92rem;
+    margin-bottom: 0.85rem;
+    line-height: 1.3;
   }
 
   .countdown-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.65rem;
-    margin-bottom: var(--space-lg);
-  }
-
-  .countdown-card {
-    padding: 1.5rem 1rem;
-    border-radius: var(--radius-lg);
-  }
-
-  .countdown-headline {
-    font-size: clamp(1.5rem, 6vw, 1.85rem);
-    line-height: 1.25;
-  }
-
-  .countdown-tagline {
-    font-size: 1.05rem;
-    margin-bottom: 1.5rem;
+    gap: 0.45rem;
+    margin-bottom: 0.65rem;
   }
 
   .digit-box {
-    padding: 0.9rem 0.4rem;
+    padding: 0.6rem 0.3rem;
     border-radius: var(--radius-md);
   }
 
   .digit-value {
-    font-size: 2.2rem;
+    font-size: 1.85rem;
+    line-height: 1;
+  }
+
+  .digit-label {
+    font-size: 0.65rem;
+    margin-top: 2px;
   }
 
   .npt-badge {
+    font-size: 0.68rem;
+    padding: 0.2rem 0.6rem;
+    margin-bottom: 0.5rem;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .clock-status-bar {
+    margin-top: 0.4rem;
     font-size: 0.72rem;
-    padding: 0.28rem 0.65rem;
-    margin-bottom: var(--space-md);
   }
 }

@@ -304,9 +304,44 @@
 }
 
 @media (max-width: 600px) {
+  .confession-view,
+  .outcome-view {
+    padding: calc(3.6rem + env(safe-area-inset-top)) 0.75rem 2rem;
+    min-height: 100vh;
+    min-height: 100dvh;
+    justify-content: center;
+  }
+
   .confession-card,
   .celebration-card,
   .respectful-no-card {
-    padding: var(--space-xl) var(--space-md);
+    padding: 1.25rem 0.95rem;
+    border-radius: var(--radius-lg);
+  }
+
+  .confession-headline {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .confession-body p {
+    font-size: 0.98rem;
+    line-height: 1.6;
+    margin-bottom: 0.6rem;
+  }
+
+  .celebration-title, .respectful-title {
+    font-size: 1.6rem;
+  }
+
+  .celebration-subtitle {
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+  }
+
+  .celebration-message, .respectful-text {
+    font-size: 0.96rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
   }
 }
