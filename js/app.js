@@ -390,6 +390,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================================================
   const airdropCrate = document.getElementById('airdrop-crate-stage');
   const ffModal = document.getElementById('ff-airdrop-modal');
+  const ffModalCard = document.getElementById('ff-modal-card');
   const ffItemStage = document.getElementById('ff-item-stage');
   const ffItemIcon = document.getElementById('ff-item-icon');
   const ffItemRarity = document.getElementById('ff-item-rarity');
@@ -453,6 +454,63 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function advanceReward(e) {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (currentRewardIndex < FF_REWARDS.length - 1) {
+      currentRewardIndex++;
+      renderReward(currentRewardIndex);
+      if (window.audioController) {
+        window.audioController.playItemPop();
+      }
+    } else {
+      // Final reward claimed - BOOYAH celebration!
+      if (window.audioController) {
+        window.audioController.playYesCelebration();
+      }
+
+      // Confetti explosion
+      for (let i = 0; i < 40; i++) {
+        const p = document.createElement('div');
+        p.className = 'celebration-sparkle';
+        const size = Math.random() * 8 + 4;
+        const colors = ['#f472b6', '#fbbf24', '#38bdf8', '#a78bfa', '#4ade80'];
+        p.style.cssText = `
+          position: fixed;
+          width: ${size}px;
+          height: ${size}px;
+          border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+          background: ${colors[Math.floor(Math.random() * colors.length)]};
+          left: ${Math.random() * 100}vw;
+          top: ${Math.random() * 50 + 10}vh;
+          pointer-events: none;
+          box-shadow: 0 0 12px currentColor;
+          animation: floatSparkle 2.2s ease-out forwards;
+          z-index: 1050;
+        `;
+        document.body.appendChild(p);
+        setTimeout(() => p.remove(), 2200);
+      }
+
+      ffModal.classList.remove('open');
+      ffModal.setAttribute('aria-hidden', 'true');
+
+      if (lootGrid) {
+        lootGrid.classList.add('open');
+      }
+
+      const crateLabel = airdropCrate.querySelector('.crate-label');
+      if (crateLabel) {
+        crateLabel.textContent = 'BOOYAH! EQUIPPED ★';
+        crateLabel.style.color = '#fbbf24';
+      }
+
+      showToast('🏆 BOOYAH! All 4 Birthday Airdrop rewards claimed & equipped!');
+    }
+  }
+
   if (airdropCrate && ffModal) {
     airdropCrate.addEventListener('click', () => {
       currentRewardIndex = 0;
@@ -464,61 +522,14 @@ document.addEventListener('DOMContentLoaded', () => {
         window.audioController.playCrateFanfare();
       }
     });
-  }
 
-  if (btnClaimNext && ffModal) {
-    btnClaimNext.addEventListener('click', () => {
-      if (currentRewardIndex < FF_REWARDS.length - 1) {
-        currentRewardIndex++;
-        renderReward(currentRewardIndex);
-        if (window.audioController) {
-          window.audioController.playItemPop();
-        }
-      } else {
-        // Final reward claimed - BOOYAH celebration!
-        if (window.audioController) {
-          window.audioController.playYesCelebration();
-        }
-
-        // Confetti explosion
-        for (let i = 0; i < 35; i++) {
-          const p = document.createElement('div');
-          p.className = 'celebration-sparkle';
-          const size = Math.random() * 8 + 4;
-          const colors = ['#f472b6', '#fbbf24', '#38bdf8', '#a78bfa', '#4ade80'];
-          p.style.cssText = `
-            position: fixed;
-            width: ${size}px;
-            height: ${size}px;
-            border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
-            background: ${colors[Math.floor(Math.random() * colors.length)]};
-            left: ${Math.random() * 100}vw;
-            top: ${Math.random() * 50 + 10}vh;
-            pointer-events: none;
-            box-shadow: 0 0 12px currentColor;
-            animation: floatSparkle 2.2s ease-out forwards;
-            z-index: 1050;
-          `;
-          document.body.appendChild(p);
-          setTimeout(() => p.remove(), 2200);
-        }
-
-        ffModal.classList.remove('open');
-        ffModal.setAttribute('aria-hidden', 'true');
-
-        if (lootGrid) {
-          lootGrid.classList.add('open');
-        }
-
-        const crateLabel = airdropCrate.querySelector('.crate-label');
-        if (crateLabel) {
-          crateLabel.textContent = 'BOOYAH! EQUIPPED ★';
-          crateLabel.style.color = '#fbbf24';
-        }
-
-        showToast('🏆 BOOYAH! All 4 Birthday Airdrop rewards claimed & equipped!');
-      }
-    });
+    // Tapping ANYWHERE on the card, item, or claim button advances to the next reward!
+    if (btnClaimNext) {
+      btnClaimNext.addEventListener('click', advanceReward);
+    }
+    if (ffModalCard) {
+      ffModalCard.addEventListener('click', advanceReward);
+    }
   }
   function setupWhatsAppLinks() {
     const btnYes = document.getElementById('btn-send-whatsapp-yes');

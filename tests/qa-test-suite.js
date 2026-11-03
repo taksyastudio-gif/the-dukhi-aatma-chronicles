@@ -110,12 +110,11 @@ runTest('Seven-Stage NO copy and flow matches specification', () => {
   });
 });
 
-// 5. Immediate "No, I mean it" Exit Option
-runTest('Immediate decline option exists for respectful exit', () => {
+// 5. Clean Proposal Options: Only YES and NO options without secondary exit clutter
+runTest('Clean proposal options: only YES and NO options present', () => {
   const confessionJs = fs.readFileSync(path.join(projectRoot, 'js/confession.js'), 'utf8');
-  assert(confessionJs.includes('btn-direct-exit'), 'Missing direct exit button ID');
-  assert(confessionJs.includes('No, I mean it'), 'Missing accessible "No, I mean it" copy');
-  assert(confessionJs.includes('handleRespectfulNoOutcome'), 'Direct exit must route straight to Respectful NO outcome');
+  assert(!confessionJs.includes('btn-direct-exit'), 'Direct exit button should be removed per user request');
+  assert(confessionJs.includes('btn-stage-yes') && confessionJs.includes('btn-stage-no'), 'Must have YES and NO options');
 });
 
 // 6. Non-manipulative Button Rules

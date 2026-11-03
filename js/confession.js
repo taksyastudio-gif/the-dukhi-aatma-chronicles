@@ -135,12 +135,6 @@ class ConfessionManager {
             ${isFinalStage ? 'I still respect my NO' : 'Still NO'}
           </button>
         </div>
-
-        <div class="direct-decline-wrap">
-          <button id="btn-direct-exit" class="btn-direct-decline" type="button" aria-label="End conversation and confirm no">
-            No, I mean it — end proposal respectfully
-          </button>
-        </div>
       </div>
     `;
 
@@ -157,11 +151,6 @@ class ConfessionManager {
       } else {
         this.handleNoClick();
       }
-    });
-
-    document.getElementById('btn-direct-exit').addEventListener('click', () => {
-      this.recordAudit('DIRECT_EXIT_CLICKED', stageData.stage);
-      this.handleRespectfulNoOutcome();
     });
 
     // Focus on the stage container for keyboard/screen reader accessibility
