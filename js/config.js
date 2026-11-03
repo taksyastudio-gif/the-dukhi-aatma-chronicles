@@ -1,27 +1,23 @@
 /* ==========================================================================
    THE DUKHI AATMA CHRONICLES - CONFIGURATION & CONSTANTS
    Target: Alsesha Shakya ("Dukhi Aatma")
-   Midnight Nepal Target: 3 November 2026, 00:00:00 (Asia/Kathmandu UTC+05:45)
+   Timezone: Asia/Kathmandu (UTC+05:45)
    ========================================================================== */
 
 const CONFIG = {
-  // Target Time Settings
+  // Target Time Settings (Nepal Standard Time)
   targetYear: 2026,
-  targetMonth: 10, // 0-indexed in JS Date.UTC (10 = November)
-  targetDay: 3,
-  targetHour: 0,
+  targetMonth: 10, // 0-indexed: 0=Jan, 10=Nov
+  targetDay: 4,    // Set to your desired date (e.g. 4 for Nov 4, 5 for Nov 5, etc.)
+  targetHour: 0,   // Midnight: 00:00:00
   targetMinute: 0,
   targetSecond: 0,
   nepalOffsetMinutes: 345, // UTC+05:45
 
-  // Exact target timestamp in UTC epoch milliseconds:
-  // Date.UTC(2026, 10, 3, 0, 0, 0) - (345 * 60 * 1000) = 1793643300000 ms
-  // which corresponds to 2026-11-02T18:15:00.000Z
-  targetTimestampUTC: 1793643300000,
+  // Display date text in titles & timeline
+  displayDateText: "Coming Soon", // Automatically updated or formatted
 
   // Notification & Feedback Settings
-  // Optional: Set your WhatsApp phone number (with country code, e.g. "97798xxxxxxxx")
-  // or a Discord/Formspree Webhook URL to receive instant notification of her choice!
   userWhatsAppNumber: "", // e.g. "9779800000000"
   webhookUrl: "", // Optional webhook (Discord, Formspree, etc.)
 
@@ -82,6 +78,21 @@ const CONFIG = {
     "https://timeapi.io/api/time/current/zone?timeZone=Asia/Kathmandu"
   ]
 };
+
+// Calculate exact target UTC milliseconds dynamically:
+// Date.UTC(targetYear, targetMonth, targetDay, targetHour, targetMinute, targetSecond) - (345 * 60 * 1000)
+CONFIG.targetTimestampUTC = Date.UTC(
+  CONFIG.targetYear,
+  CONFIG.targetMonth,
+  CONFIG.targetDay,
+  CONFIG.targetHour,
+  CONFIG.targetMinute,
+  CONFIG.targetSecond
+) - (CONFIG.nepalOffsetMinutes * 60 * 1000);
+
+// Format human readable date display
+const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+CONFIG.displayDateFormatted = `${monthNames[CONFIG.targetMonth]} ${CONFIG.targetDay}`;
 
 // Freeze configuration
 Object.freeze(CONFIG);

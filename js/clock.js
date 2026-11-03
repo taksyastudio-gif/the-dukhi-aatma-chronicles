@@ -32,9 +32,21 @@ class NepalCountdownEngine {
     this.setupVisibilityHandler();
   }
 
-  // Check URL parameters for easy testing: ?test=5s or ?test=midnight or ?test=post
+  // Check URL parameters for easy testing: ?test=5s or ?test=midnight or ?date=2026-11-05
   checkUrlParams() {
     const params = new URLSearchParams(window.location.search);
+
+    // Support custom target date directly from URL: ?date=2026-11-05
+    if (params.has('date')) {
+      const parts = params.get('date').split('-');
+      if (parts.length === 3) {
+        const y = parseInt(parts[0], 10);
+        const m = parseInt(parts[1], 10) - 1;
+        const d = parseInt(parts[2], 10);
+        this.targetTimestamp = Date.UTC(y, m, d, 0, 0, 0) - (CONFIG.nepalOffsetMinutes * 60 * 1000);
+      }
+    }
+
     if (params.has('test')) {
       const mode = params.get('test');
       if (mode === '5s') {

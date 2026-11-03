@@ -169,7 +169,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Setup WhatsApp Links
+  // Dynamic date labels update from CONFIG
+  document.querySelectorAll('.date-display-label').forEach(el => {
+    el.textContent = CONFIG.displayDateFormatted || "November";
+  });
   function setupWhatsAppLinks() {
     const btnYes = document.getElementById('btn-send-whatsapp-yes');
     const btnNo = document.getElementById('btn-send-whatsapp-no');

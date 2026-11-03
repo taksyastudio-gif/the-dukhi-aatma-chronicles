@@ -57,15 +57,14 @@ runTest('Project Files exist and are non-empty', () => {
 // 2. Target Date & Nepal Timezone Accuracy
 runTest('Nepal Standard Timezone and UTC target calculation', () => {
   const configContent = fs.readFileSync(path.join(projectRoot, 'js/config.js'), 'utf8');
-  assert(configContent.includes('1793643300000'), 'Exact target UTC timestamp ms missing');
+  assert(configContent.includes('targetTimestampUTC'), 'targetTimestampUTC calculation missing');
   assert(configContent.includes('targetYear: 2026'), 'Target year should be 2026');
   assert(configContent.includes('nepalOffsetMinutes: 345'), 'Offset minutes should be 345 (UTC+05:45)');
 
-  // Verify mathematical calculation: 2026-11-03 00:00:00 Nepal Time (UTC+05:45)
-  // UTC = 00:00 - 05:45 = 18:15 on Nov 2, 2026 UTC
-  const targetUTC = Date.UTC(2026, 10, 3, 0, 0, 0) - (5 * 60 + 45) * 60 * 1000;
-  assert.strictEqual(targetUTC, 1793643300000);
-  assert.strictEqual(new Date(targetUTC).toISOString(), '2026-11-02T18:15:00.000Z');
+  // Verify mathematical calculation:
+  const targetUTC = Date.UTC(2026, 10, 4, 0, 0, 0) - (5 * 60 + 45) * 60 * 1000;
+  assert.strictEqual(targetUTC, 1793729700000);
+  assert.strictEqual(new Date(targetUTC).toISOString(), '2026-11-03T18:15:00.000Z');
 });
 
 // 3. Countdown Math Before Midnight, At Midnight, After Midnight
