@@ -191,30 +191,102 @@
           </div>
         </section>
 
-        <!-- Heartfelt Birthday Letter -->
-        <article class="birthday-letter-card">
-          <h2 class="letter-salutation">Dear Alsesha,</h2>
+        <!-- Birthday Celebration Letter (Cute Gift Wrap & Cats) -->
+        <article class="birthday-letter-card gift-wrapped-card">
+          <div class="card-ribbon-tag">🎁 Birthday Special Delivery</div>
+
+          <!-- Cute Kitten with Birthday Hat Sticker -->
+          <div class="cute-cat-sticker top-right" aria-hidden="true">
+            <svg viewBox="0 0 100 100" fill="none">
+              <!-- Cute Cat Head -->
+              <ellipse cx="50" cy="58" rx="36" ry="32" fill="#fed7aa"/>
+              <!-- Ears -->
+              <polygon points="22,36 12,12 38,24" fill="#fb923c"/>
+              <polygon points="22,33 16,16 34,25" fill="#fbcfe8"/>
+              <polygon points="78,36 88,12 62,24" fill="#fb923c"/>
+              <polygon points="78,33 84,16 66,25" fill="#fbcfe8"/>
+              <!-- Eyes (Happy Arcs) -->
+              <path d="M36 54 Q42 46 48 54" stroke="#431407" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+              <path d="M52 54 Q58 46 64 54" stroke="#431407" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+              <!-- Blush -->
+              <circle cx="33" cy="62" r="5" fill="#f472b6" opacity="0.6"/>
+              <circle cx="67" cy="62" r="5" fill="#f472b6" opacity="0.6"/>
+              <!-- Nose & Mouth -->
+              <polygon points="48,60 52,60 50,63" fill="#f43f5e"/>
+              <path d="M46 64 Q50 67 54 64" stroke="#431407" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+              <!-- Whiskers -->
+              <line x1="24" y1="58" x2="10" y2="56" stroke="#431407" stroke-width="2"/>
+              <line x1="24" y1="64" x2="12" y2="67" stroke="#431407" stroke-width="2"/>
+              <line x1="76" y1="58" x2="90" y2="56" stroke="#431407" stroke-width="2"/>
+              <line x1="76" y1="64" x2="88" y2="67" stroke="#431407" stroke-width="2"/>
+              <!-- Cute Party Cone Hat -->
+              <polygon points="50,2 38,32 62,32" fill="#ec4899"/>
+              <polygon points="50,2 45,32 55,32" fill="#fde047"/>
+              <circle cx="50" cy="2" r="4" fill="#38bdf8"/>
+            </svg>
+          </div>
+
+          <h2 class="letter-salutation">Happy Birthday, Dukhi Aatma! 🎉🎂</h2>
           
           <p class="letter-paragraph">
-            Another year has turned, and midnight is officially yours. I wanted to take a quiet moment before the noise of everyone else’s birthday messages to write you something honest and genuine.
+            Another year older, officially another level unlocked, and today the spotlight is 100% on you!
           </p>
 
           <p class="letter-paragraph">
-            It is hard to believe that <strong>approximately one year</strong> has already slipped by since the day we met. Life has a funny way of making the most unexpected moments count the most. Meeting randomly in a Free Fire match on Girlfriend Day back in August wasn’t on my itinerary for that month, but the truth is, the game was just how the door opened. Almost immediately, the gaming took a backseat—because what truly mattered was how we just talked. Hours of talking about our days, laughing at silly things, sharing late-night thoughts, and finding an effortless comfort in each other's voices.
+            No heavy speeches or dramatic life lectures today—just wishing you the absolute happiest birthday! I hope your day is loaded with good food, sweet treats, zero stress, and minimal reasons to dramatically sigh.
           </p>
 
           <p class="letter-paragraph">
-            Throughout this past year, you have been someone I truly appreciate having in my life. Despite the nickname—and no matter how much you play the part of a dramatic <em>Dukhi Aatma</em>—your presence has brought a genuine warmth and laughter into my days. You have this quiet way of making random conversations feel comfortable and memorable.
-          </p>
-
-          <p class="letter-paragraph">
-            I hope this new year of your life brings you everything you hope for: peaceful moments, reasons to smile without second-guessing them, and people who recognize how precious you are. You deserve a year that treats your heart with care.
+            It’s crazy to think about a year has passed since we first crossed paths in Free Fire on Girlfriend Day back in August. But today isn't about looking back—it's about celebrating you! You deserve to feel celebrated, eat lots of cake, make big wishes, and enjoy every single minute of your special day.
           </p>
 
           <p class="letter-signoff">
-            Happy Birthday, Dukhi Aatma. Always cheering for you.
+            Have an awesome birthday, Alsesha! 🐱🍰✨
           </p>
         </article>
+
+        <!-- Cute Gift Wrap Unwrapping Box -->
+        <section class="gift-wrap-section" aria-label="Unwrap Birthday Gift">
+          <span class="card-ribbon-tag">🎀 Tap To Unwrap Your Present</span>
+          <h2 class="section-title">A Special Birthday Package</h2>
+          <p class="section-desc">Wrapped with ribbon, starlight, and cute kittens. Tap the gift box to open!</p>
+
+          <div id="gift-box-stage" class="gift-box-interactive" role="button" tabindex="0" aria-label="Tap to unwrap gift box">
+            <div class="gift-bow-top">
+              <div class="bow-loop"></div>
+              <div class="bow-loop"></div>
+            </div>
+            <div class="gift-box-shape">
+              <span style="font-size: 1.8rem; z-index: 6;">🎁</span>
+            </div>
+          </div>
+
+          <div id="gift-open-message" class="gift-open-message">
+            <h3 style="color: var(--accent-gold-warm); font-family: var(--font-serif); margin-bottom: 0.5rem; font-size: 1.3rem;">🎉 Surprise Unwrapped!</h3>
+            <p style="color: var(--text-primary); font-size: 1rem; line-height: 1.6;">
+              Official birthday protocol activated: Unlimited cake, zero sad playlists allowed today, and a team of certified birthday kittens sent to guard your happiness! 🐾✨
+            </p>
+            
+            <div class="cat-gallery-row">
+              <div class="cat-gallery-item">
+                <span style="font-size: 2.2rem;">🐱</span>
+                <span>Party Cat</span>
+              </div>
+              <div class="cat-gallery-item">
+                <span style="font-size: 2.2rem;">😸</span>
+                <span>Happy Cat</span>
+              </div>
+              <div class="cat-gallery-item">
+                <span style="font-size: 2.2rem;">🐾</span>
+                <span>Paw Patrol</span>
+              </div>
+              <div class="cat-gallery-item">
+                <span style="font-size: 2.2rem;">🎂</span>
+                <span>Cake Eater</span>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <!-- Auto-Scroll & Guided Navigation Controls -->
         <div class="story-controls-bar">

@@ -1,4 +1,189 @@
 /* ==========================================================================
+   CUTE CAT STICKERS & GIFT WRAP THEME STYLES
+   ========================================================================== */
+
+.gift-wrapped-card {
+  position: relative;
+  border: 2px solid rgba(244, 114, 182, 0.45) !important;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(244, 114, 182, 0.25) !important;
+  background: linear-gradient(145deg, rgba(23, 19, 58, 0.9) 0%, rgba(13, 17, 45, 0.95) 100%) !important;
+}
+
+.card-ribbon-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, #f472b6 0%, #fb7185 100%);
+  color: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius-full);
+  margin-bottom: var(--space-md);
+  box-shadow: 0 4px 12px rgba(244, 114, 182, 0.4);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.cute-cat-sticker {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+  animation: gentle-cat-bob 3s ease-in-out infinite alternate;
+}
+
+.cute-cat-sticker.top-right {
+  top: -24px;
+  right: 18px;
+  width: 72px;
+  height: 72px;
+}
+
+.cute-cat-sticker.bottom-left {
+  bottom: -20px;
+  left: 20px;
+  width: 65px;
+  height: 65px;
+}
+
+@keyframes gentle-cat-bob {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(-6px) rotate(3deg); }
+}
+
+/* Gift Wrap Present Box Section */
+.gift-wrap-section {
+  max-width: 680px;
+  margin: var(--space-2xl) auto;
+  text-align: center;
+  background: var(--bg-card);
+  border: 2px dashed rgba(244, 114, 182, 0.4);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl) var(--space-lg);
+  backdrop-filter: blur(16px);
+  position: relative;
+}
+
+.gift-box-interactive {
+  cursor: pointer;
+  display: inline-block;
+  margin: var(--space-md) auto;
+  transition: transform var(--transition-normal);
+  touch-action: manipulation;
+}
+
+.gift-box-interactive:hover {
+  transform: scale(1.08) translateY(-4px);
+}
+
+.gift-box-shape {
+  width: 110px;
+  height: 100px;
+  background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+  border-radius: 14px;
+  position: relative;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(236, 72, 153, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Satin Ribbons Across Gift Box */
+.gift-box-shape::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 100%;
+  background: #fef08a;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+.gift-box-shape::after {
+  content: '';
+  position: absolute;
+  height: 20px;
+  width: 100%;
+  background: #fef08a;
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+.gift-bow-top {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 26px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 5;
+}
+
+.bow-loop {
+  width: 22px;
+  height: 22px;
+  border: 4px solid #fef08a;
+  border-radius: 50% 50% 10% 50%;
+  transform: rotate(45deg);
+}
+
+.bow-loop:last-child {
+  transform: rotate(-45deg) scaleX(-1);
+}
+
+.gift-open-message {
+  display: none;
+  margin-top: var(--space-md);
+  padding: 1rem 1.4rem;
+  border-radius: var(--radius-md);
+  background: rgba(244, 114, 182, 0.15);
+  border: 1px solid rgba(244, 114, 182, 0.4);
+  animation: fadeIn 0.4s ease;
+}
+
+.gift-open-message.show {
+  display: block;
+}
+
+.cat-gallery-row {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.cat-gallery-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--accent-lavender);
+}
+
+.cat-gallery-item svg {
+  width: 54px;
+  height: 54px;
+}
+
+/* Paw prints decorator */
+.paw-divider {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  color: var(--accent-soft-pink);
+  opacity: 0.6;
+  margin: var(--space-xl) auto;
+  font-size: 1.1rem;
+}
+
+/* ==========================================================================
    THE 24 HOURS EARLY PLAYFUL PROLOGUE
    ========================================================================== */
 

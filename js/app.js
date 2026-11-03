@@ -299,6 +299,47 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
+  // CUTE GIFT WRAP UNWRAPPING
+  // =========================================================================
+  const giftBoxStage = document.getElementById('gift-box-stage');
+  const giftOpenMessage = document.getElementById('gift-open-message');
+
+  if (giftBoxStage && giftOpenMessage) {
+    giftBoxStage.addEventListener('click', () => {
+      const isAlreadyOpen = giftOpenMessage.classList.contains('show');
+      giftOpenMessage.classList.toggle('show');
+
+      if (!isAlreadyOpen && window.audioController) {
+        window.audioController.playCelestialArpeggio();
+      }
+
+      if (!isAlreadyOpen) {
+        const rect = giftBoxStage.getBoundingClientRect();
+        for (let i = 0; i < 20; i++) {
+          const p = document.createElement('div');
+          p.className = 'celebration-sparkle';
+          const size = Math.random() * 8 + 4;
+          p.style.cssText = `
+            position: fixed;
+            width: ${size}px;
+            height: ${size}px;
+            border-radius: 50%;
+            background: ${['#f472b6', '#fef08a', '#38bdf8', '#c4b5fd'][Math.floor(Math.random() * 4)]};
+            left: ${rect.left + rect.width / 2 + (Math.random() - 0.5) * 100}px;
+            top: ${rect.top + 30 + (Math.random() - 0.5) * 60}px;
+            pointer-events: none;
+            box-shadow: 0 0 10px currentColor;
+            animation: floatSparkle 1.8s ease-out forwards;
+            z-index: 100;
+          `;
+          document.body.appendChild(p);
+          setTimeout(() => p.remove(), 1800);
+        }
+      }
+    });
+  }
+
+  // =========================================================================
   // DUKHI AATMA MOOD SELECTOR
   // =========================================================================
   const moodQuotes = {
