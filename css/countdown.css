@@ -3,14 +3,21 @@
    ========================================================================== */
 
 .countdown-view {
+  height: 100vh;
+  height: 100dvh;
   min-height: 100vh;
+  min-height: 100dvh;
+  max-height: 100vh;
+  max-height: 100dvh;
+  overflow: hidden !important;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 6rem var(--space-md) 4rem;
+  padding: calc(3.6rem + env(safe-area-inset-top)) 1rem calc(1rem + env(safe-area-inset-bottom));
   position: relative;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .countdown-card {

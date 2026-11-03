@@ -52,7 +52,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     views[viewName].classList.add('active');
     currentActiveView = viewName;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Lock scrolling on single-screen views (countdown & opening), allow scrolling on birthday
+    if (viewName === 'countdown' || viewName === 'opening') {
+      document.body.classList.add('lock-scroll');
+      document.documentElement.classList.add('lock-scroll');
+    } else {
+      document.body.classList.remove('lock-scroll');
+      document.documentElement.classList.remove('lock-scroll');
+    }
+
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
   // 2. Audio Control Setup

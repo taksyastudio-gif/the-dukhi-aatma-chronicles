@@ -35,6 +35,15 @@ body {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
+/* When on Countdown or Opening view, completely lock scrolling on ALL devices */
+html.lock-scroll,
+body.lock-scroll {
+  overflow: hidden !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+}
+
 /* Accessible Hidden Text for Screen Readers */
 .sr-only {
   position: absolute;
