@@ -114,9 +114,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Timer temporarily bypassed so you can inspect and review all sections live!
-  // To restore countdown later: switchView(initialRemaining.isMidnight ? 'opening' : 'countdown');
-  switchView('birthday');
+  // Initialize view: Countdown if before midnight Nepal Time, Opening envelope if midnight reached
+  const initialRemaining = clockEngine.getRemaining();
+  if (initialRemaining.isMidnight) {
+    switchView('opening');
+  } else {
+    switchView('countdown');
+  }
 
   // 4. Envelope Reveal Animation
   function openEnvelopeExperience() {
