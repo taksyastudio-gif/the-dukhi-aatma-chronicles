@@ -96,13 +96,13 @@ runTest('Seven-Stage NO copy and flow matches specification', () => {
   const configContent = fs.readFileSync(path.join(projectRoot, 'js/config.js'), 'utf8');
   
   const expectedSnippets = [
-    "Wait... are you sure? I rehearsed this question at least once.",
-    "Dukhi Aatma, that was unexpectedly devastating for my little plan.",
-    "Okay, okay. I promise I'm being serious. Still a no?",
-    "Plot twist: I actually gathered courage to ask this.",
-    "One final dramatic pause. Think about it, but only if you want to.",
-    "Almost at the end of this little adventure. Your answer is still yours.",
-    "Alright. No more dramatic questioning. I respect your answer."
+    "Wait... are you saying NO because I showed up 24 hours early yesterday",
+    "Dukhi Aatma, my emotional armor is taking heavy critical damage",
+    "Okay, okay. I promise I'm being 100% serious now. Still a no?",
+    "Plot twist: I actually spent hours crafting this whole midnight universe",
+    "One final dramatic pause.",
+    "Almost at the end of this little adventure. Your answer is completely yours.",
+    "Alright. No more dramatic questioning. I respect your answer with all my heart."
   ];
 
   expectedSnippets.forEach((snippet, idx) => {

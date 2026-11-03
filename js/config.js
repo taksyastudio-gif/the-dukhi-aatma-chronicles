@@ -33,42 +33,42 @@ const CONFIG = {
     choiceAuditLog: "dukhi_aatma_choice_audit"
   },
 
-  // Seven-Stage Playful NO Sequence
+  // Seven-Stage Playful NO Sequence (Director's Cut)
   noStages: [
     {
       stage: 1,
       badge: "Stage 1 of 7 • A gentle pause",
-      message: "Wait... are you sure? I rehearsed this question at least once."
+      message: "Wait... are you saying NO because I showed up 24 hours early yesterday? Fair point, but consider my enthusiasm!"
     },
     {
       stage: 2,
-      badge: "Stage 2 of 7 • The plot thickens",
-      message: "Dukhi Aatma, that was unexpectedly devastating for my little plan."
+      badge: "Stage 2 of 7 • Critical Hit",
+      message: "Dukhi Aatma, my emotional armor is taking heavy critical damage here."
     },
     {
       stage: 3,
       badge: "Stage 3 of 7 • Checking in",
-      message: "Okay, okay. I promise I'm being serious. Still a no?"
+      message: "Okay, okay. I promise I'm being 100% serious now. Still a no?"
     },
     {
       stage: 4,
-      badge: "Stage 4 of 7 • Vulnerability check",
-      message: "Plot twist: I actually gathered courage to ask this."
+      badge: "Stage 4 of 7 • Plot Twist",
+      message: "Plot twist: I actually spent hours crafting this whole midnight universe just for you."
     },
     {
       stage: 5,
       badge: "Stage 5 of 7 • Deep breath",
-      message: "One final dramatic pause. Think about it, but only if you want to."
+      message: "One final dramatic pause. (Take a breath, dramatic sigh permitted)."
     },
     {
       stage: 6,
       badge: "Stage 6 of 7 • The home stretch",
-      message: "Almost at the end of this little adventure. Your answer is still yours."
+      message: "Almost at the end of this little adventure. Your answer is completely yours."
     },
     {
       stage: 7,
       badge: "Stage 7 of 7 • The gentle resolution",
-      message: "Alright. No more dramatic questioning. I respect your answer."
+      message: "Alright. No more dramatic questioning. I respect your answer with all my heart."
     }
   ],
 

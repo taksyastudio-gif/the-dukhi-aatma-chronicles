@@ -299,6 +299,46 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
+  // DUKHI AATMA MOOD SELECTOR
+  // =========================================================================
+  const moodQuotes = {
+    dramatic: '"Permission granted to dramatically stare out of an imaginary window and sigh into the abyss."',
+    warrior: '"Warning: High combat power detected. The entire Free Fire server has evacuated Clock Tower."',
+    smiling: '"We caught you smiling! Your official Dukhi Aatma membership card is temporarily on probation."'
+  };
+
+  document.querySelectorAll('.btn-mood').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.btn-mood').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const mood = btn.getAttribute('data-mood');
+      const reactionEl = document.getElementById('mood-reaction-card');
+      if (reactionEl && moodQuotes[mood]) {
+        reactionEl.textContent = moodQuotes[mood];
+      }
+
+      if (window.audioController) {
+        window.audioController.playChime(mood === 'smiling' ? 659.25 : 440);
+      }
+    });
+  });
+
+  // =========================================================================
+  // CONSTELLATION MEMORY VAULT STAR CARDS
+  // =========================================================================
+  document.querySelectorAll('.vault-star-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const isAlreadyRevealed = card.classList.contains('revealed');
+      card.classList.toggle('revealed');
+
+      if (!isAlreadyRevealed && window.audioController) {
+        window.audioController.playChime(587.33);
+      }
+    });
+  });
+
+  // =========================================================================
   // INTERACTIVE AIRDROP CRATE LOOTING
   // =========================================================================
   const airdropCrate = document.getElementById('airdrop-crate-stage');
