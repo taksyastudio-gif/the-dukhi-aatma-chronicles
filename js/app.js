@@ -114,13 +114,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Check initial state: if already past midnight on first load, immediately show envelope or birthday
-  const initialRemaining = clockEngine.getRemaining();
-  if (initialRemaining.isMidnight) {
-    switchView('opening');
-  } else {
-    switchView('countdown');
-  }
+  // Timer temporarily bypassed so you can inspect and review all sections live!
+  // To restore countdown later: switchView(initialRemaining.isMidnight ? 'opening' : 'countdown');
+  switchView('birthday');
 
   // 4. Envelope Reveal Animation
   function openEnvelopeExperience() {
