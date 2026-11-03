@@ -303,7 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================================================================
   const moodQuotes = {
     dramatic: '"Permission granted to dramatically stare out of an imaginary window and sigh into the abyss."',
-    warrior: '"Warning: High combat power detected. The entire Free Fire server has evacuated Clock Tower."',
+    talks: '"Warning: 2 AM energy detected. Time to lose track of time talking about everything and nothing."',
     smiling: '"We caught you smiling! Your official Dukhi Aatma membership card is temporarily on probation."'
   };
 
