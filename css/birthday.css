@@ -461,6 +461,140 @@
   color: var(--text-secondary);
 }
 
+/* ==========================================================================
+   INTERACTIVE AIRDROP CARE PACKAGE
+   ========================================================================== */
+
+.airdrop-section {
+  max-width: 780px;
+  margin: var(--space-3xl) auto;
+  text-align: center;
+  background: var(--bg-card);
+  border: 1px solid rgba(244, 114, 182, 0.3);
+  border-radius: var(--radius-xl);
+  padding: var(--space-2xl) var(--space-lg);
+  backdrop-filter: blur(16px);
+  position: relative;
+  overflow: hidden;
+}
+
+.airdrop-flare-light {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(244, 114, 182, 0.6) 0%, transparent 70%);
+  filter: blur(20px);
+  pointer-events: none;
+}
+
+.airdrop-crate-stage {
+  cursor: pointer;
+  display: inline-block;
+  margin: var(--space-md) auto var(--space-lg);
+  perspective: 600px;
+  transition: transform var(--transition-normal);
+  touch-action: manipulation;
+}
+
+.airdrop-crate-stage:hover {
+  transform: scale(1.05) translateY(-4px);
+}
+
+.crate-box {
+  width: 130px;
+  height: 95px;
+  background: linear-gradient(145deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);
+  border: 2px solid var(--accent-soft-pink);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 25px rgba(244, 114, 182, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.crate-stripes {
+  position: absolute;
+  inset: 6px;
+  border: 1px dashed rgba(244, 114, 182, 0.5);
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.crate-icon {
+  width: 38px;
+  height: 38px;
+  color: var(--accent-gold-warm);
+}
+
+.crate-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--accent-soft-pink);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+}
+
+.loot-grid {
+  display: none;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+  text-align: left;
+}
+
+.loot-grid.open {
+  display: grid;
+  animation: fadeIn 0.4s ease;
+}
+
+.loot-item-card {
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(196, 181, 253, 0.25);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.loot-item-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-soft-pink);
+}
+
+.loot-icon-box {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  background: rgba(139, 92, 246, 0.25);
+  border: 1px solid rgba(196, 181, 253, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--accent-lavender);
+}
+
+.loot-item-title {
+  font-size: 0.95rem;
+  color: var(--text-pure);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.loot-item-desc {
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
 /* Chapter Transition Callout */
 .chapter-transition-wrap {
   text-align: center;

@@ -297,6 +297,48 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 400);
     });
   }
+
+  // =========================================================================
+  // INTERACTIVE AIRDROP CRATE LOOTING
+  // =========================================================================
+  const airdropCrate = document.getElementById('airdrop-crate-stage');
+  const lootGrid = document.getElementById('loot-grid');
+
+  if (airdropCrate && lootGrid) {
+    airdropCrate.addEventListener('click', () => {
+      const isAlreadyOpen = lootGrid.classList.contains('open');
+      lootGrid.classList.toggle('open');
+
+      if (!isAlreadyOpen && window.audioController) {
+        window.audioController.playCelestialArpeggio();
+      }
+
+      if (!isAlreadyOpen) {
+        // Soft sparkle burst
+        const rect = airdropCrate.getBoundingClientRect();
+        for (let i = 0; i < 18; i++) {
+          const p = document.createElement('div');
+          p.className = 'celebration-sparkle';
+          const size = Math.random() * 7 + 3;
+          p.style.cssText = `
+            position: fixed;
+            width: ${size}px;
+            height: ${size}px;
+            border-radius: 50%;
+            background: #f472b6;
+            left: ${rect.left + rect.width / 2 + (Math.random() - 0.5) * 80}px;
+            top: ${rect.top + 30 + (Math.random() - 0.5) * 50}px;
+            pointer-events: none;
+            box-shadow: 0 0 10px #f472b6;
+            animation: floatSparkle 1.8s ease-out forwards;
+            z-index: 100;
+          `;
+          document.body.appendChild(p);
+          setTimeout(() => p.remove(), 1800);
+        }
+      }
+    });
+  }
   function setupWhatsAppLinks() {
     const btnYes = document.getElementById('btn-send-whatsapp-yes');
     const btnNo = document.getElementById('btn-send-whatsapp-no');

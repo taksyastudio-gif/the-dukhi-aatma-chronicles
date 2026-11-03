@@ -170,6 +170,61 @@ class AudioController {
     });
   }
 
+  // Gentle music box synthesized "Happy Birthday" melody
+  playMusicBoxBirthday() {
+    if (this.isMuted || !this.ctx) return;
+    try {
+      const now = this.ctx.currentTime;
+      const notes = [
+        { f: 392.00, d: 0.35, t: 0.0 },   // G4
+        { f: 392.00, d: 0.35, t: 0.4 },   // G4
+        { f: 440.00, d: 0.65, t: 0.8 },   // A4
+        { f: 392.00, d: 0.65, t: 1.5 },   // G4
+        { f: 523.25, d: 0.65, t: 2.2 },   // C5
+        { f: 493.88, d: 1.10, t: 2.9 },   // B4
+
+        { f: 392.00, d: 0.35, t: 4.2 },   // G4
+        { f: 392.00, d: 0.35, t: 4.6 },   // G4
+        { f: 440.00, d: 0.65, t: 5.0 },   // A4
+        { f: 392.00, d: 0.65, t: 5.7 },   // G4
+        { f: 587.33, d: 0.65, t: 6.4 },   // D5
+        { f: 523.25, d: 1.10, t: 7.1 },   // C5
+
+        { f: 392.00, d: 0.35, t: 8.4 },   // G4
+        { f: 392.00, d: 0.35, t: 8.8 },   // G4
+        { f: 783.99, d: 0.65, t: 9.2 },   // G5
+        { f: 659.25, d: 0.65, t: 9.9 },   // E5
+        { f: 523.25, d: 0.65, t: 10.6 },  // C5
+        { f: 493.88, d: 0.65, t: 11.3 },  // B4
+        { f: 440.00, d: 1.10, t: 12.0 },  // A4
+
+        { f: 698.46, d: 0.35, t: 13.3 },  // F5
+        { f: 698.46, d: 0.35, t: 13.7 },  // F5
+        { f: 659.25, d: 0.65, t: 14.1 },  // E5
+        { f: 523.25, d: 0.65, t: 14.8 },  // C5
+        { f: 587.33, d: 0.65, t: 15.5 },  // D5
+        { f: 523.25, d: 1.40, t: 16.2 }   // C5
+      ];
+
+      notes.forEach(({ f, d, t }) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(f, now + t);
+
+        gain.gain.setValueAtTime(0.0001, now + t);
+        gain.gain.linearRampToValueAtTime(0.045, now + t + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + t + d + 0.8);
+
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+
+        osc.start(now + t);
+        osc.stop(now + t + d + 0.9);
+      });
+    } catch (e) {}
+  }
+
   // Sound effect: Opening the wax-sealed envelope
   playEnvelopeOpen() {
     if (this.isMuted || !this.ctx) return;
