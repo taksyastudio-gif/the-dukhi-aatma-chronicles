@@ -3,79 +3,78 @@
    ========================================================================== */
 
 .opening-view {
-  height: 100vh;
-  height: 100dvh;
   min-height: 100vh;
   min-height: 100dvh;
-  max-height: 100vh;
-  max-height: 100dvh;
-  overflow: hidden !important;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: calc(3.6rem + env(safe-area-inset-top)) 1rem calc(1rem + env(safe-area-inset-bottom));
+  padding: calc(4.2rem + env(safe-area-inset-top)) 1rem calc(2rem + env(safe-area-inset-bottom));
   text-align: center;
   position: relative;
   box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .opening-wrapper {
-  max-width: 620px;
+  max-width: 480px;
   width: 100%;
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0.5rem;
 }
 
 /* Invitation Typography */
 .opening-invitation {
   font-family: var(--font-serif);
-  font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+  font-size: clamp(1.4rem, 4.5vw, 2.2rem);
   color: var(--text-pure);
-  margin-bottom: var(--space-xs);
-  font-weight: 600;
+  margin-bottom: 0.35rem;
+  font-weight: 700;
   text-shadow: 0 0 25px rgba(196, 181, 253, 0.4);
-  animation: gentle-float 4s ease-in-out infinite;
+  line-height: 1.25;
 }
 
 .opening-subtitle {
-  font-size: 1.05rem;
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
   color: var(--accent-lavender);
-  margin-bottom: var(--space-2xl);
-  letter-spacing: 0.05em;
-}
-
-@keyframes gentle-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+  margin-bottom: 1.4rem;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
 }
 
 /* 3D Envelope Container */
 .envelope-stage {
-  perspective: 1200px;
-  width: 320px;
-  height: 220px;
-  margin: 0 auto var(--space-2xl);
+  perspective: 1000px;
+  width: 270px;
+  height: 175px;
+  margin: 0 auto 0.8rem;
   position: relative;
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.3s ease;
+}
+
+.envelope-stage:hover,
+.envelope-stage:focus-visible {
+  transform: translateY(-4px) scale(1.03);
 }
 
 .envelope-body {
   width: 100%;
   height: 100%;
   position: relative;
-  background: linear-gradient(145deg, #181d45 0%, #0d1230 100%);
-  border-radius: var(--radius-md);
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7), 0 0 30px rgba(139, 92, 246, 0.25);
-  border: 1px solid rgba(196, 181, 253, 0.25);
+  background: linear-gradient(145deg, #1b204c 0%, #0d1230 100%);
+  border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75), 0 0 30px rgba(139, 92, 246, 0.3);
+  border: 2px solid rgba(251, 191, 36, 0.45);
   transform-style: preserve-3d;
   transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
-}
-
-.envelope-stage:hover .envelope-body {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.8), 0 0 45px rgba(244, 114, 182, 0.35);
 }
 
 /* Triangular Envelope Pocket & Flap */
@@ -85,13 +84,13 @@
   left: 0;
   width: 0;
   height: 0;
-  border-left: 160px solid transparent;
-  border-right: 160px solid transparent;
-  border-top: 120px solid #232b63;
+  border-left: 135px solid transparent;
+  border-right: 135px solid transparent;
+  border-top: 95px solid #28336e;
   transform-origin: top;
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 5;
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
 }
 
 .envelope-pocket {
@@ -100,36 +99,43 @@
   left: 0;
   width: 0;
   height: 0;
-  border-left: 160px solid #141a3d;
-  border-right: 160px solid #141a3d;
-  border-bottom: 120px solid #1e2658;
-  border-top: 100px solid transparent;
-  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  border-left: 135px solid #141a3d;
+  border-right: 135px solid #141a3d;
+  border-bottom: 95px solid #1e2658;
+  border-top: 75px solid transparent;
+  border-radius: 0 0 10px 10px;
   z-index: 4;
 }
 
 /* Golden Wax Seal */
 .wax-seal {
   position: absolute;
-  top: 100px;
+  top: 80px;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 58px;
-  height: 58px;
+  width: 52px;
+  height: 52px;
   background: radial-gradient(circle, #fde047 0%, #ca8a04 70%, #854d0e 100%);
   border-radius: 50%;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 20px rgba(251, 191, 36, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.6);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), 0 0 25px rgba(251, 191, 36, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.7);
   z-index: 6;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #eab308;
+  border: 2px solid #fef08a;
   transition: transform 0.4s ease, opacity 0.4s ease;
+  cursor: pointer;
+  animation: pulse-seal 2.5s infinite ease-in-out;
+}
+
+@keyframes pulse-seal {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 4px 15px rgba(0,0,0,0.6), 0 0 20px rgba(251,191,36,0.5); }
+  50% { transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 4px 20px rgba(0,0,0,0.7), 0 0 35px rgba(251,191,36,0.85); }
 }
 
 .wax-seal svg {
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   color: #713f12;
   filter: drop-shadow(0 1px 1px rgba(255, 255, 255, 0.4));
 }
@@ -137,14 +143,14 @@
 /* Hidden Letter Inside Envelope */
 .envelope-letter {
   position: absolute;
-  top: 15px;
-  left: 20px;
-  right: 20px;
-  bottom: 15px;
+  top: 12px;
+  left: 18px;
+  right: 18px;
+  bottom: 12px;
   background: #fdfbf7;
-  border-radius: 8px;
+  border-radius: 6px;
   z-index: 2;
-  padding: 1rem;
+  padding: 0.8rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
@@ -154,10 +160,10 @@
 }
 
 .letter-preview-line {
-  height: 6px;
+  height: 5px;
   background: #e2e8f0;
   border-radius: 3px;
-  margin-bottom: 8px;
+  margin-bottom: 7px;
   width: 80%;
 }
 
@@ -177,58 +183,83 @@
 }
 
 .envelope-stage.opened .envelope-letter {
-  transform: translateY(-100px) scale(1.05);
+  transform: translateY(-80px) scale(1.05);
   z-index: 7;
+}
+
+/* Interactive Tap Hint */
+.envelope-tap-hint {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #fbbf24;
+  margin-top: 0.4rem;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 700;
+  opacity: 0.9;
 }
 
 /* Trigger Button */
 .open-surprise-btn {
-  font-size: 1.15rem;
-  padding: 0.95rem 2.5rem;
-  gap: var(--space-sm);
-  letter-spacing: 0.02em;
+  font-size: 1rem;
+  padding: 0.85rem 2.2rem;
+  gap: var(--space-xs);
+  letter-spacing: 0.03em;
+  background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+  color: #ffffff;
+  border: 2px solid #fbcfe8;
+  border-radius: 9999px;
+  cursor: pointer;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(236, 72, 153, 0.45);
+  transition: all 0.25s ease;
+  touch-action: manipulation;
+}
+
+.open-surprise-btn:hover,
+.open-surprise-btn:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(236, 72, 153, 0.65);
+  background: linear-gradient(135deg, #f43f5e 0%, #9333ea 100%);
 }
 
 @media (max-width: 480px) {
   .opening-view {
-    height: 100vh;
-    height: 100dvh;
-    min-height: 0;
-    max-height: 100dvh;
-    overflow: hidden;
-    padding: calc(3.6rem + env(safe-area-inset-top)) 0.75rem calc(1rem + env(safe-area-inset-bottom));
+    padding: calc(3.8rem + env(safe-area-inset-top)) 0.75rem calc(1.5rem + env(safe-area-inset-bottom));
   }
   .opening-invitation {
-    font-size: 1.55rem;
-    margin-bottom: 0.2rem;
+    font-size: 1.45rem;
   }
   .opening-subtitle {
-    font-size: 0.9rem;
-    margin-bottom: 1.2rem;
+    font-size: 0.85rem;
+    margin-bottom: 1.1rem;
   }
   .envelope-stage {
-    width: 260px;
-    height: 180px;
-    margin-bottom: 1.5rem;
+    width: 250px;
+    height: 165px;
+    margin-bottom: 0.6rem;
   }
   .envelope-flap {
-    border-left-width: 130px;
-    border-right-width: 130px;
-    border-top-width: 95px;
+    border-left-width: 125px;
+    border-right-width: 125px;
+    border-top-width: 90px;
   }
   .envelope-pocket {
-    border-left-width: 130px;
-    border-right-width: 130px;
-    border-bottom-width: 95px;
-    border-top-width: 80px;
+    border-left-width: 125px;
+    border-right-width: 125px;
+    border-bottom-width: 90px;
+    border-top-width: 70px;
   }
   .wax-seal {
-    top: 80px;
-    width: 46px;
-    height: 46px;
+    top: 75px;
+    width: 48px;
+    height: 48px;
   }
   .open-surprise-btn {
-    font-size: 1rem;
-    padding: 0.8rem 1.8rem;
+    font-size: 0.95rem;
+    padding: 0.75rem 1.8rem;
+    width: 100%;
+    max-width: 280px;
   }
 }

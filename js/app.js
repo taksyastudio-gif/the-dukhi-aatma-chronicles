@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
     views[viewName].classList.add('active');
     currentActiveView = viewName;
 
-    // Lock scrolling on single-screen views (countdown & opening), allow scrolling on birthday
-    if (viewName === 'countdown' || viewName === 'opening') {
+    // Lock scrolling on countdown view only; allow smooth display and scrolling on opening and birthday
+    if (viewName === 'countdown') {
       document.body.classList.add('lock-scroll');
       document.documentElement.classList.add('lock-scroll');
     } else {
@@ -123,8 +123,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 4. Envelope Reveal Animation
+  let isEnvelopeOpening = false;
   function openEnvelopeExperience() {
-    if (!envelopeStage) return;
+    if (!envelopeStage || isEnvelopeOpening) return;
+    isEnvelopeOpening = true;
 
     if (window.audioController) {
       window.audioController.playEnvelopeOpen();
@@ -134,7 +136,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(() => {
       switchView('birthday');
-    }, 1100);
+      if (window.audioController) {
+        window.audioController.playCelestialArpeggio();
+      }
+    }, 800);
   }
 
   if (btnOpenSurprise) {
